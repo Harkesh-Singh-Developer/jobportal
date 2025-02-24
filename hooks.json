@@ -1,0 +1,13 @@
+[
+  {
+    "id": "github-webhook",
+    "execute-command": "/home/frontend.hnweb.site/public_html/apnaportal/deploy.sh",
+    "command-working-directory": "/home/frontend.hnweb.site/public_html/apnaportal",
+    "pass-arguments-to-command": [
+      {
+        "source": "payload",
+        "name": "head_commit.id"
+      }
+    ]
+  }
+]
