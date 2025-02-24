@@ -1,0 +1,22 @@
+[0;1;32m●[0m lscpd.service - LSCPD Daemon
+     Loaded: loaded (/etc/systemd/system/lscpd.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Thu 2025-02-20 00:00:21 UTC; 4 days ago
+   Main PID: 208902 (lscpd)
+     CGroup: /system.slice/lscpd.service
+             ├─208902 "lscpd (main)"
+             ├─208904 "lscpd (lscgid)"
+             ├─208905 "lscpd (#01)"
+             ├─892418 /usr/local/CyberCP/bin/lswsgi -m /usr/local/CyberCP/CyberCP/wsgi.py
+             ├─892419 /usr/local/CyberCP/bin/lswsgi -m /usr/local/CyberCP/CyberCP/wsgi.py
+             └─892481 /usr/local/CyberCP/bin/lswsgi -m /usr/local/CyberCP/CyberCP/wsgi.py
+
+Feb 24 14:15:44 All-Projects sudo[905961]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=0)
+Feb 24 14:15:44 All-Projects sudo[905961]: pam_unix(sudo:session): session closed for user root
+Feb 24 14:22:05 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:22:05 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:24:10 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:24:10 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:26:22 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:26:22 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:32:50 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
+Feb 24 14:32:50 All-Projects systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185m/etc/systemd/system/lscpd.service:11: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.[0m
