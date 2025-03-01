@@ -41,7 +41,7 @@ function Login() {
           <Grid size={{ xs: 10, sm: 8, md: 4 }}>
             {/* Using `size` prop for Grid2 */}
             <Card style={{ padding: "20px", textAlign: "center" }}>
-              <CardHeader title={`${loginType} - Login`} />
+              <CardHeader title={`${loginType} - - - Login`} />
               <CardContent>
                 <Grid
                   container
