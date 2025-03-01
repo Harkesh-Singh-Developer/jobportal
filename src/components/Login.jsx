@@ -6,15 +6,26 @@ import {
   CardHeader,
   TextField,
   Button,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import "./theme/Customcss.css";
+import { useNavigate } from "react-router-dom";
+
+import { Close } from "@mui/icons-material";
+
 function Login() {
   const [step, setStep] = useState(1);
   const [mobile, setMobile] = useState("");
   const [btnState, setBtnState] = useState(true);
   const [otp, setOtp] = useState("");
   const loginType = "Candidate";
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const navigate = useNavigate();
 
+  // Functions to handle login
   const handlePhone = (e) => {
     e.preventDefault();
     const value = e.target.value.replace(/\D/g, ""); // Ensure only digits
@@ -27,8 +38,47 @@ function Login() {
     // Send OTP to the user
     setStep(2);
   };
+
+  const handleOtp = (e) => {
+    const otpValue = e.target.value.slice(0, 4); // Limit input to 4 characters
+    setOtp(otpValue);
+
+    if (otpValue.length === 4) {
+      if (otpValue === "1234") {
+        setSnackbarMessage("Logging in...");
+        setSnackbarOpen(true);
+        setTimeout(() => {
+          navigate("/profile"); // Navigate after success
+        }, 1500);
+      } else {
+        setSnackbarMessage("Invalid OTP!");
+        setSnackbarOpen(true);
+      }
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <React.Fragment>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={snackbarOpen}
+        message={snackbarMessage}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        action={
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleCloseSnackbar}
+          >
+            <Close fontSize="small" />
+          </IconButton>
+        }
+      />
       {step === 1 ? (
         <Grid
           container
@@ -49,7 +99,7 @@ function Login() {
                   alignItems={"center"}
                   spacing={2}
                 >
-                  <Grid item>
+                  <Grid>
                     <TextField
                       id="phone"
                       label="Enter Phone Number"
@@ -68,7 +118,7 @@ function Login() {
                       }}
                     />
                   </Grid>
-                  <Grid item>
+                  <Grid>
                     <Button
                       variant="contained"
                       color="primary"
@@ -104,7 +154,7 @@ function Login() {
                   alignItems={"center"}
                   spacing={2}
                 >
-                  <Grid item>
+                  <Grid>
                     <TextField
                       id="otp"
                       label=""
@@ -112,14 +162,14 @@ function Login() {
                       size="small"
                       type="text"
                       value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      onChange={handleOtp}
                       sx={{
                         "& input": {
-                          textAlign: "center", // Center the input text
+                          textAlign: "center",
                         },
                       }}
-                      slotProps={{
-                        input: { maxLength: 4 },
+                      inputRef={(input) => {
+                        if (input) input.maxLength = 4;
                       }}
                     />
                   </Grid>
