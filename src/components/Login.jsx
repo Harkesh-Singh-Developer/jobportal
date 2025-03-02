@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AuthContext from "./context/Auth";
 import Grid from "@mui/material/Grid2"; // Importing Grid2
 import {
   Card,
@@ -14,7 +15,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Close } from "@mui/icons-material";
 
-function Login({ setIsAuthenticated }) {
+function Login() {
+  const { login } = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const [mobile, setMobile] = useState("");
   const [btnState, setBtnState] = useState(true);
@@ -37,25 +39,72 @@ function Login({ setIsAuthenticated }) {
     setStep(2);
   };
 
-  const handleOtp = (e) => {
+  // const handleOtp = async (e) => {
+  //   const otpValue = e.target.value.slice(0, 4); // Limit input to 4 characters
+  //   setOtp(otpValue);
+
+  //   if (otpValue.length === 4) {
+  //     try {
+  //       const response = await fetch("https://localhost/v1/verifyOTP", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ phoneNumber: mobile, otp: otpValue }),
+  //       });
+
+  //       const data = await response.json();
+
+  //       if (response.ok && data.success) {
+  //         localStorage.setItem("isAuthenticated", "true");
+  //         localStorage.setItem("phoneNumber", mobile);
+
+  //         setSnackbarMessage("Logging in...");
+  //         setSnackbarOpen(true);
+
+  //         setTimeout(() => {
+  //           setIsAuthenticated(true);
+  //           navigate(data.profileCompleted ? "/profile" : "/Basic_info"); // Navigate accordingly
+  //         }, 1500);
+  //       } else {
+  //         setSnackbarMessage(data.message || "Invalid OTP!");
+  //         setSnackbarOpen(true);
+  //       }
+  //     } catch (error) {
+  //       console.error("OTP verification failed:", error);
+  //       setSnackbarMessage("Something went wrong. Please try again.");
+  //       setSnackbarOpen(true);
+  //     }
+  //   }
+  // };
+
+  const handleOtp = async (e) => {
     const otpValue = e.target.value.slice(0, 4); // Limit input to 4 characters
     setOtp(otpValue);
 
     if (otpValue.length === 4) {
-      // Handle OTP Validation
-      if (otpValue === "1234") {
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("phoneNumber", mobile);
+      try {
+        const isProfileCompleted = false; // Change to `true` or `false` for testing
 
-        setSnackbarMessage("Logging in...");
-        setSnackbarOpen(true);
+        if (otpValue === "1234") {
+          login(mobile, isProfileCompleted);
 
-        setTimeout(() => {
-          setIsAuthenticated(true);
-          navigate("/profile"); // Navigate after success
-        }, 1500);
-      } else {
-        setSnackbarMessage("Invalid OTP!");
+          setSnackbarMessage("Logging in...");
+          setSnackbarOpen(true);
+
+          setTimeout(() => {
+            console.log("Profile Completed:", isProfileCompleted);
+
+            // Ensure navigation follows the correct condition
+            navigate(isProfileCompleted ? "/profile" : "/Basic_info");
+          }, 1500);
+        } else {
+          setSnackbarMessage("Invalid OTP!");
+          setSnackbarOpen(true);
+        }
+      } catch (error) {
+        console.error("OTP verification failed:", error);
+        setSnackbarMessage("Something went wrong. Please try again.");
         setSnackbarOpen(true);
       }
     }
