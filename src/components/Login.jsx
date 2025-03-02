@@ -14,13 +14,11 @@ import { useNavigate } from "react-router-dom";
 
 import { Close } from "@mui/icons-material";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const [step, setStep] = useState(1);
   const [mobile, setMobile] = useState("");
   const [btnState, setBtnState] = useState(true);
   const [otp, setOtp] = useState("");
-  const loginType = "Candidate";
-  const [loginStatus, setLoginStatus] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
@@ -35,7 +33,7 @@ function Login() {
   };
 
   const sendOtp = () => {
-    // Send OTP to the user
+    // Send OTP to the user, Check registeration, register if not exists
     setStep(2);
   };
 
@@ -44,10 +42,16 @@ function Login() {
     setOtp(otpValue);
 
     if (otpValue.length === 4) {
+      // Handle OTP Validation
       if (otpValue === "1234") {
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("phoneNumber", mobile);
+
         setSnackbarMessage("Logging in...");
         setSnackbarOpen(true);
+
         setTimeout(() => {
+          setIsAuthenticated(true);
           navigate("/profile"); // Navigate after success
         }, 1500);
       } else {
@@ -91,7 +95,7 @@ function Login() {
           <Grid size={{ xs: 10, sm: 8, md: 4 }}>
             {/* Using `size` prop for Grid2 */}
             <Card style={{ padding: "20px", textAlign: "center" }}>
-              <CardHeader title={`${loginType} - Login`} />
+              <CardHeader title="Candidate Login" />
               <CardContent>
                 <Grid
                   container

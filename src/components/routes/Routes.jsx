@@ -1,36 +1,47 @@
-// src/routes.js
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../Login";
-import Profile from "../seeker/pages/Profile";
+import Fallbackloader from "./Fallbackloader";
 
-const AppRoutes = ({ isAuthenticated, setIsAuthenticated }) => {
+const Login = React.lazy(() => import("../Login"));
+const Profile = React.lazy(() => import("../seeker/pages/Profile"));
+
+const AppRoutes = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") === "true"
+  );
+
+  useEffect(() => {
+    const storedAuth = localStorage.getItem("isAuthenticated");
+    if (storedAuth === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
-    <Routes>
-      {/* If not logged in, show Login page */}
-      <Route
-        path="/"
-        element={
-          isAuthenticated ? (
-            <Navigate to="/profile" />
-          ) : (
-            <Login setIsAuthenticated={setIsAuthenticated} />
-          )
-        }
-      />
-
-      {/* Profile page (Only accessible when logged in) */}
-      <Route
-        path="/profile"
-        element={
-          isAuthenticated ? (
-            <Profile setIsAuthenticated={setIsAuthenticated} />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
-      />
-    </Routes>
+    <Suspense fallback={<Fallbackloader />}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/profile" />
+            ) : (
+              <Login setIsAuthenticated={setIsAuthenticated} />
+            )
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            isAuthenticated ? (
+              <Profile setIsAuthenticated={setIsAuthenticated} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 };
 
