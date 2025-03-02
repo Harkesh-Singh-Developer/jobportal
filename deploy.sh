@@ -3,7 +3,7 @@ export NVM_DIR="/root/.nvm"
 source $NVM_DIR/nvm.sh
 
 APP_DIR="/home/frontend.hnweb.site/public_html/apnaportal"
-NODE_VERSION="v22.11.0"
+NODE_VERSION="v22.14.0"
 NPM_BIN="/root/.nvm/versions/node/$NODE_VERSION/bin/npm"
 
 cd $APP_DIR
