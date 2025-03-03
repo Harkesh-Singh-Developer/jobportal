@@ -43,20 +43,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 // LinerProgress Adjust
 const degrees = ["BA", "BCA", "MCA", "BBA", "MBA"];
 const colleges = ["IGNOU", "DU", "MDU", "Other"];
-const expMonths = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+const expMonths = ["1", "2", "3", "4"];
 
 const expYears = ["1", "2", "3", "4"];
 function Step3({ formData, setFormData, onBack, onNext }) {
@@ -126,31 +113,6 @@ function Step3({ formData, setFormData, onBack, onNext }) {
                         size="small"
                         fullWidth
                       >
-                        <InputLabel size="small">Month</InputLabel>
-                        <Select
-                          value={expMonth}
-                          label="Months"
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              expMonth: e.target.value,
-                            })
-                          }
-                        >
-                          {expMonths.map((month) => (
-                            <MenuItem key={month} value={month}>
-                              {month}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid size={{ xs: 6 }}>
-                      <FormControl
-                        sx={{ minWidth: 120 }}
-                        size="small"
-                        fullWidth
-                      >
                         <InputLabel size="small">Year</InputLabel>
                         <Select
                           value={expYear}
@@ -165,6 +127,31 @@ function Step3({ formData, setFormData, onBack, onNext }) {
                           {expYears.map((complyear) => (
                             <MenuItem key={complyear} value={complyear}>
                               {complyear}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 6 }}>
+                      <FormControl
+                        sx={{ minWidth: 120 }}
+                        size="small"
+                        fullWidth
+                      >
+                        <InputLabel size="small">Month</InputLabel>
+                        <Select
+                          value={expMonth}
+                          label="Months"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              expMonth: e.target.value,
+                            })
+                          }
+                        >
+                          {expMonths.map((month) => (
+                            <MenuItem key={month} value={month}>
+                              {month}
                             </MenuItem>
                           ))}
                         </Select>

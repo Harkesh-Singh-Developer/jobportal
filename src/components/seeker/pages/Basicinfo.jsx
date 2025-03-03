@@ -40,7 +40,7 @@ function Basic_Info() {
     console.log(formData);
     setSnackbarOpen(true);
     setSnackbarMessage("Sending data...");
-    setSeverity("info");
+    setSeverity("error");
     setStep(step + 1);
   };
 
