@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar, Alert } from "@mui/material";
 
-function SnackbarComponent({ open, message, severity = "success", onClose }) {
+function SnackbarComponent({ open, message, severity, onClose }) {
   return (
     <Snackbar
       open={open}
