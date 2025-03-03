@@ -84,7 +84,7 @@ function Login() {
 
     if (otpValue.length === 4) {
       try {
-        const isProfileCompleted = false; // Change to `true` or `false` for testing
+        const isProfileCompleted = true; // Change to `true` or `false` for testing
 
         if (otpValue === "1234") {
           login(mobile, isProfileCompleted);
