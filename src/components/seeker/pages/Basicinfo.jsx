@@ -1,19 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Grid from "@mui/material/Grid2";
 import logo from "../../../assets/logo/apnacarrer_logo.png";
+import banner1 from "/images/banner1.png";
 // Appbar Imports
 import AuthContext from "../../context/Auth";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Box, Paper, Typography, Menu, Button, MenuItem } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Typography,
+  Menu,
+  Button,
+  MenuItem,
+  TextField,
+  Chip,
+} from "@mui/material";
 
 function Basic_Info() {
   const { logout } = useContext(AuthContext);
-
+  const [selectedGender, setSelectedGender] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -62,7 +71,7 @@ function Basic_Info() {
                 onClick={handleClick}
                 color="inherit"
               >
-                <MenuIcon />
+                <AccountCircleIcon />
               </IconButton>
             </Box>
 
@@ -74,19 +83,90 @@ function Basic_Info() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>My Jobs</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
         </Container>
       </AppBar>
 
-      <Grid container spacing={2} direction={"row"} justifyContent={"center"}>
+      <Grid
+        container
+        spacing={2}
+        direction={"row"}
+        justifyContent={"center"}
+        mt={5}
+      >
         <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
-          <Paper>Image and promotion</Paper>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <img src={banner1} alt="Banner1" />
+          </Box>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-          <Paper>Form</Paper>
+          <Paper variant="outlined" sx={{ p: 4 }}>
+            <Typography variant="h6" mb={2}>
+              Complete Your Profile
+            </Typography>
+
+            <Grid container spacing={2}>
+              {/* Full Name */}
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  label="Full Name"
+                  variant="outlined"
+                  size="small"
+                />
+              </Grid>
+
+              {/* Date of Birth */}
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  label="Date of Birth"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  size="small"
+                />
+              </Grid>
+
+              {/* Gender Selection (Male/Female) */}
+              <Grid size={{ xs: 12 }}>
+                <Typography variant="body1" mb={1}>
+                  Select Gender:
+                </Typography>
+                <Chip
+                  label="Male"
+                  color={selectedGender === "Male" ? "primary" : "default"}
+                  onClick={() => setSelectedGender("Male")}
+                  sx={{ mr: 1 }}
+                />
+                <Chip
+                  label="Female"
+                  color={selectedGender === "Female" ? "primary" : "default"}
+                  onClick={() => setSelectedGender("Female")}
+                />
+              </Grid>
+
+              {/* Email */}
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  variant="outlined"
+                  size="small"
+                />
+              </Grid>
+
+              {/* Submit Button */}
+              <Grid size={{ xs: 12 }}>
+                <Button variant="contained" color="primary" fullWidth>
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
       </Grid>
     </React.Fragment>
