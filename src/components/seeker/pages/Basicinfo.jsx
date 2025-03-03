@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import api from "../../config/Config";
 import AuthContext from "../../context/Auth";
 import AppBarComponent from "../AppbarComponent";
 import Step1 from "../pages/steps/Step1";
 import Step2 from "../pages/steps/Step2";
 import Step3 from "./steps/Step3";
-import SnackbarComponent from "../SnackbarComponent";
 
 function Basic_Info() {
   const { user, logout } = useContext(AuthContext);
   const [uid, setUid] = useState(null);
   const [step, setStep] = useState(1);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [severity, setSeverity] = useState("");
   // Form Data
   const [formData, setFormData] = useState({
     name: "",
@@ -38,9 +35,7 @@ function Basic_Info() {
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
     console.log(formData);
-    setSnackbarOpen(true);
-    setSnackbarMessage("Sending data...");
-    setSeverity("error");
+    toast("Sending Data...");
     setStep(step + 1);
   };
 
@@ -50,13 +45,8 @@ function Basic_Info() {
 
   return (
     <>
-      <SnackbarComponent
-        open={snackbarOpen}
-        message={snackbarMessage}
-        severity={severity}
-        onClose={() => setSnackbarOpen(false)}
-      />
-      <AppBarComponent logout={logout} />
+      <ToastContainer />
+      <AppBarComponent logout={logout} uid={uid} />
       {step === 1 && (
         <Step1
           formData={formData}
@@ -85,3 +75,5 @@ function Basic_Info() {
 }
 
 export default Basic_Info;
+// TODO formik, yup validation
+// TODO layout adjustment. so that image will not rerender

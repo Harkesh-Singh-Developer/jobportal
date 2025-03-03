@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const profile = JSON.parse(localStorage.getItem("profile") || "{}");
     const uid = localStorage.getItem("uid");
 
-    if (storedAuth) {
+    if (storedAuth && uid) {
       setUser({
         phoneNumber: localStorage.getItem("phoneNumber"),
         isAuthenticated: true,
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       phoneNumber,
       isAuthenticated: true,
       isProfileCompleted,
+      uid,
     });
   };
 

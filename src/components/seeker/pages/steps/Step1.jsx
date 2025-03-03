@@ -40,7 +40,7 @@ function Step1({ formData, setFormData, onNext }) {
 
   const handleNext = () => {
     // Validate if necessary
-    
+
     onNext({ name, dob, selectedGender, email });
   };
 
