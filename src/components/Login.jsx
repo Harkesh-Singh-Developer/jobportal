@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import AuthContext from "./context/Auth";
+import api from "./config/Config";
 import Grid from "@mui/material/Grid2"; // Importing Grid2
 import {
   Card,
@@ -21,6 +22,7 @@ function Login() {
   const [mobile, setMobile] = useState("");
   const [btnState, setBtnState] = useState(true);
   const [otp, setOtp] = useState("");
+  const [token, setToken] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
@@ -34,49 +36,28 @@ function Login() {
     setBtnState(trimmedValue.length !== 10);
   };
 
-  const sendOtp = () => {
+  const sendOtp = async () => {
     // Send OTP to the user, Check registeration, register if not exists
-    setStep(2);
+    const data = {
+      number: mobile,
+    };
+    try {
+      const response = await api.post("/login-registration", data);
+      console.log(response.data);
+      if (response.data.status) {
+        setToken(response.data.data.token);
+        setSnackbarMessage("OTP Sent on mobile");
+        setSnackbarOpen(true);
+        setStep(2);
+      } else {
+        setSnackbarMessage("API Error");
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      setSnackbarMessage(error);
+      setSnackbarOpen(true);
+    }
   };
-
-  // const handleOtp = async (e) => {
-  //   const otpValue = e.target.value.slice(0, 4); // Limit input to 4 characters
-  //   setOtp(otpValue);
-
-  //   if (otpValue.length === 4) {
-  //     try {
-  //       const response = await fetch("https://localhost/v1/verifyOTP", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ phoneNumber: mobile, otp: otpValue }),
-  //       });
-
-  //       const data = await response.json();
-
-  //       if (response.ok && data.success) {
-  //         localStorage.setItem("isAuthenticated", "true");
-  //         localStorage.setItem("phoneNumber", mobile);
-
-  //         setSnackbarMessage("Logging in...");
-  //         setSnackbarOpen(true);
-
-  //         setTimeout(() => {
-  //           setIsAuthenticated(true);
-  //           navigate(data.profileCompleted ? "/profile" : "/Basic_info"); // Navigate accordingly
-  //         }, 1500);
-  //       } else {
-  //         setSnackbarMessage(data.message || "Invalid OTP!");
-  //         setSnackbarOpen(true);
-  //       }
-  //     } catch (error) {
-  //       console.error("OTP verification failed:", error);
-  //       setSnackbarMessage("Something went wrong. Please try again.");
-  //       setSnackbarOpen(true);
-  //     }
-  //   }
-  // };
 
   const handleOtp = async (e) => {
     const otpValue = e.target.value.slice(0, 4); // Limit input to 4 characters
@@ -84,22 +65,24 @@ function Login() {
 
     if (otpValue.length === 4) {
       try {
-        const isProfileCompleted = true; // Change to `true` or `false` for testing
-
-        if (otpValue === "1234") {
-          login(mobile, isProfileCompleted);
-
+        const data = {
+          number: mobile,
+          otp: otpValue,
+        };
+        const response = await api.post(`/otp-verify/${token}`, data);
+        console.log(response.data);
+        if (response.data.status) {
           setSnackbarMessage("Logging in...");
           setSnackbarOpen(true);
 
+          const isProfileCompleted = response.data.data.isProfileCompleted; // Change to `true` or `false` for testing
+          login(mobile, isProfileCompleted);
           setTimeout(() => {
             console.log("Profile Completed:", isProfileCompleted);
-
-            // Ensure navigation follows the correct condition
-            navigate(isProfileCompleted ? "/profile" : "/Basic_info");
-          }, 1500);
+            // navigate(isProfileCompleted ? "/profile" : "/Basic_info");
+          }, 2500); // Increased delay (adjust if needed)
         } else {
-          setSnackbarMessage("Invalid OTP!");
+          setSnackbarMessage("Invalid OTP");
           setSnackbarOpen(true);
         }
       } catch (error) {
