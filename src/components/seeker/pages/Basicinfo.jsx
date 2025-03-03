@@ -1,7 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import api from "../../config/Config";
 import Grid from "@mui/material/Grid2";
 import logo from "../../../assets/logo/apnacarrer_logo.png";
 import banner1 from "../../../assets/images/banner1.png";
+import { Close } from "@mui/icons-material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 // Appbar Imports
 import AuthContext from "../../context/Auth";
 import AppBar from "@mui/material/AppBar";
@@ -9,6 +12,7 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Paper,
@@ -18,13 +22,59 @@ import {
   MenuItem,
   TextField,
   Chip,
+  Divider,
+  Snackbar,
 } from "@mui/material";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
 
 function Basic_Info() {
-  const { logout } = useContext(AuthContext);
-  const [selectedGender, setSelectedGender] = useState("");
+  const { user, logout } = useContext(AuthContext);
+  const [uid, setUid] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  //   Form Elements
+  const [step, setStep] = useState(2);
+  const [name, setName] = useState("");
+  const [dob, setDob] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [selectedEducation, setSelectedEducation] = useState("");
+  //   Form Elements
+
+  useEffect(() => {
+    setUid(user?.uid);
+  }, [user]);
+
+  // LinerProgress Adjust
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: theme.palette.grey[200],
+      ...theme.applyStyles("dark", {
+        backgroundColor: theme.palette.grey[800],
+      }),
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: "#1a90ff",
+      ...theme.applyStyles("dark", {
+        backgroundColor: "#308fe8",
+      }),
+    },
+  }));
+
+  // LinerProgress Adjust
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -36,8 +86,51 @@ function Basic_Info() {
     logout();
   };
 
+  //   handle Step 1
+  const handleStep1 = async () => {
+    const data = {
+      uid: uid,
+      full_name: name,
+      gender: selectedGender,
+      email: email,
+      date_of_birth: dob,
+    };
+    console.log(data);
+
+    try {
+      setSnackbarMessage("Sending Data...");
+      setSnackbarOpen(true);
+      const response = await api.post("/seeker-registration", data);
+      console.log(response);
+      if (response.data.status) {
+        setStep(2);
+      } else {
+        setSnackbarMessage(`!error - ${response.data.message} `);
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      setSnackbarMessage("API Error: ", error);
+      setSnackbarOpen(true);
+    }
+  };
   return (
     <React.Fragment>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={snackbarOpen}
+        message={snackbarMessage}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        action={
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleCloseSnackbar}
+          >
+            <Close fontSize="small" />
+          </IconButton>
+        }
+      />
       <AppBar position="static" color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -89,86 +182,191 @@ function Basic_Info() {
           </Toolbar>
         </Container>
       </AppBar>
-
-      <Grid
-        container
-        spacing={2}
-        direction={"row"}
-        justifyContent={"center"}
-        mt={5}
-      >
-        <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <img src={banner1} alt="Banner1" />
-          </Box>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-          <Paper variant="outlined" sx={{ p: 4 }}>
-            <Typography variant="h6" mb={2}>
-              Complete Your Profile
-            </Typography>
-
-            <Grid container spacing={2}>
-              {/* Full Name */}
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Full Name"
-                  variant="outlined"
-                  size="small"
-                />
-              </Grid>
-
-              {/* Date of Birth */}
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Date of Birth"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  size="small"
-                />
-              </Grid>
-
-              {/* Gender Selection (Male/Female) */}
-              <Grid size={{ xs: 12 }}>
-                <Typography variant="body1" mb={1}>
-                  Select Gender:
+      {step === 1 && (
+        <Grid
+          container
+          spacing={2}
+          direction={"row"}
+          justifyContent={"center"}
+          mt={5}
+        >
+          <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <img src={banner1} alt="Banner1" />
+            </Box>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+            <Paper variant="outlined" sx={{ p: 4 }}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              >
+                <Typography variant="h6" sx={{ whiteSpace: "nowrap", mr: 2 }}>
+                  Complete Your Profile
                 </Typography>
-                <Chip
-                  label="Male"
-                  color={selectedGender === "Male" ? "primary" : "default"}
-                  onClick={() => setSelectedGender("Male")}
-                  sx={{ mr: 1 }}
-                />
-                <Chip
-                  label="Female"
-                  color={selectedGender === "Female" ? "primary" : "default"}
-                  onClick={() => setSelectedGender("Female")}
-                />
-              </Grid>
 
-              {/* Email */}
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  size="small"
+                <BorderLinearProgress
+                  variant="determinate"
+                  value={10}
+                  sx={{ flexGrow: 1, height: 2 }}
                 />
-              </Grid>
+              </Box>
+              <Divider sx={{ mb: 2 }} />
+              <Grid container spacing={2}>
+                {/* Full Name */}
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Full Name"
+                    variant="outlined"
+                    size="small"
+                    required
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </Grid>
 
-              {/* Submit Button */}
-              <Grid size={{ xs: 12 }}>
-                <Button variant="contained" color="primary" fullWidth>
-                  Next Step
-                </Button>
+                {/* Date of Birth */}
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Date of Birth"
+                    required
+                    type="date"
+                    slotProps={{ inputLabel: { shrink: true } }}
+                    variant="outlined"
+                    size="small"
+                    value={dob}
+                    onChange={(e) => {
+                      setDob(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                {/* Gender Selection (Male/Female) */}
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="body1" mb={1}>
+                    Select Gender:
+                  </Typography>
+                  <Chip
+                    label="Male"
+                    color={selectedGender === "M" ? "primary" : "default"}
+                    onClick={() => setSelectedGender("M")}
+                    sx={{ mr: 1 }}
+                  />
+                  <Chip
+                    label="Female"
+                    color={selectedGender === "F" ? "primary" : "default"}
+                    onClick={() => setSelectedGender("F")}
+                  />
+                </Grid>
+
+                {/* Email */}
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Email -(Optional)"
+                    variant="outlined"
+                    size="small"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                {/* Submit Button */}
+                <Grid size={{ xs: 12 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleStep1}
+                  >
+                    Next
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
+      {/* Step 2 - Education */}
+      {step === 2 && (
+        <Grid
+          container
+          spacing={2}
+          direction={"row"}
+          justifyContent={"center"}
+          mt={5}
+        >
+          <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <img src={banner1} alt="Banner1" />
+            </Box>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+            <Paper variant="outlined" sx={{ p: 4 }}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              >
+                <IconButton
+                  onClick={() => {
+                    setStep(1);
+                  }}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+                <Typography variant="h6" sx={{ whiteSpace: "nowrap", mr: 2 }}>
+                  Complete Your Profile
+                </Typography>
+
+                <BorderLinearProgress
+                  variant="determinate"
+                  value={20}
+                  sx={{ flexGrow: 1, height: 2 }}
+                />
+              </Box>
+              <Divider sx={{ mb: 2 }} />
+              <Grid container spacing={2}>
+                {/* Gender Selection (Male/Female) */}
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="body1" mb={1}>
+                    Are you currently pursuing your education?
+                  </Typography>
+                  <Chip
+                    label="Yes"
+                    color={selectedEducation === "y" ? "primary" : "default"}
+                    onClick={() => setSelectedEducation("y")}
+                    sx={{ mr: 1 }}
+                  />
+                  <Chip
+                    label="No"
+                    color={selectedEducation === "n" ? "primary" : "default"}
+                    onClick={() => setSelectedEducation("n")}
+                  />
+                </Grid>
+
+                {/* Email */}
+                <Grid size={{ xs: 12 }}></Grid>
+
+                {/* Submit Button */}
+                <Grid size={{ xs: 12 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleStep1}
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
+      )}
     </React.Fragment>
   );
 }

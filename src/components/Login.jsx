@@ -70,13 +70,14 @@ function Login() {
           otp: otpValue,
         };
         const response = await api.post(`/otp-verify/${token}`, data);
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.status) {
           setSnackbarMessage("Logging in...");
           setSnackbarOpen(true);
 
           const isProfileCompleted = response.data.data.isProfileCompleted; // Change to `true` or `false` for testing
-          login(mobile, isProfileCompleted);
+          const uid = response.data.data.uid;
+          login(mobile, isProfileCompleted, uid);
           setTimeout(() => {
             console.log("Profile Completed:", isProfileCompleted);
             // navigate(isProfileCompleted ? "/profile" : "/Basic_info");
