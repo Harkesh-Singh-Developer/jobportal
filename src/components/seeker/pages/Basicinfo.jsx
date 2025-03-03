@@ -162,7 +162,7 @@ function Basic_Info() {
               {/* Submit Button */}
               <Grid size={{ xs: 12 }}>
                 <Button variant="contained" color="primary" fullWidth>
-                  Next
+                  Next Step
                 </Button>
               </Grid>
             </Grid>
