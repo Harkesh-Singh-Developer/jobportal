@@ -26,6 +26,9 @@ function Basic_Info() {
     college: "",
     completionMonth: "",
     completionYear: "",
+    experience: "",
+    expMonth: "",
+    expYear: "",
   });
 
   useEffect(() => {
@@ -37,7 +40,7 @@ function Basic_Info() {
     console.log(formData);
     setSnackbarOpen(true);
     setSnackbarMessage("Sending data...");
-    setSeverity("error");
+    setSeverity("info");
     setStep(step + 1);
   };
 
