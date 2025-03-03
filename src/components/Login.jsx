@@ -70,7 +70,7 @@ function Login() {
           otp: otpValue,
         };
         const response = await api.post(`/otp-verify/${token}`, data);
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status) {
           setSnackbarMessage("Logging in...");
           setSnackbarOpen(true);

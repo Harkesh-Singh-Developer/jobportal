@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import logo from "../../assets/logo/apnacarrer_logo.png";
+export { logo };
 // Define API base URL
 const API_BASE_URL = "https://apna-api.hnweb.site/api/v1/seeker"; // Change this as needed
 

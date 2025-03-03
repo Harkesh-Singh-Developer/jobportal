@@ -22,7 +22,10 @@ export const AuthProvider = ({ children }) => {
   const login = (phoneNumber, isProfileCompleted) => {
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("phoneNumber", phoneNumber);
-    localStorage.setItem("profile", JSON.stringify({ completed: isProfileCompleted }));
+    localStorage.setItem(
+      "profile",
+      JSON.stringify({ completed: isProfileCompleted })
+    );
 
     setUser({
       phoneNumber,
