@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Grid from "@mui/material/Grid2";
 import logo from "../../../assets/logo/apnacarrer_logo.png";
-import banner1 from "/images/banner1.png";
+import banner1 from "../../../assets/images/banner1.png";
 // Appbar Imports
 import AuthContext from "../../context/Auth";
 import AppBar from "@mui/material/AppBar";
