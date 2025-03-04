@@ -9,13 +9,11 @@ import {
   Box,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AuthContext from "../context/Auth";
 import logo from "../../assets/logo/apnacarrer_logo.png";
 
 const AppBarComponent = ({ logout, uid }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-console.log(uid)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,7 +31,7 @@ console.log(uid)
         <Toolbar disableGutters>
           {/* Logo */}
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-            <img src={logo} alt="apnacareer logo" height={40} /> 
+            <img src={logo} alt="apnacareer logo" height={40} />
           </Box>
 
           {/* Profile Menu */}
@@ -54,6 +52,7 @@ console.log(uid)
             open={open}
             onClose={handleClose}
           >
+            <MenuItem onClick={handleClose}>UID : {uid}</MenuItem>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My Jobs</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>

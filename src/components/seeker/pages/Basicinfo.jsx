@@ -5,14 +5,16 @@ import AuthContext from "../../context/Auth";
 import AppBarComponent from "../AppbarComponent";
 import Step1 from "../pages/steps/Step1";
 import Step2 from "../pages/steps/Step2";
-import Step3 from "./steps/Step3";
+import Step3 from "../pages/steps/Step3"; // Fixed path issue
 
 function Basic_Info() {
   const { user, logout } = useContext(AuthContext);
-  const [uid, setUid] = useState(null);
+
   const [step, setStep] = useState(1);
+
   // Form Data
   const [formData, setFormData] = useState({
+    uid: user?.uid || "",
     name: "",
     dob: "",
     selectedGender: "",
@@ -29,24 +31,42 @@ function Basic_Info() {
   });
 
   useEffect(() => {
-    setUid(user?.uid);
+    if (user?.uid) {
+      setFormData((prevData) => ({
+        ...prevData,
+        uid: user.uid,
+      }));
+    }
   }, [user]);
+  // Function to Handle Step Change
+  const handleNext = async (data) => {
+    const updatedData = { ...data, uid: user?.uid || formData.uid }; // Ensure uid is always included
 
-  const handleNext = (data) => {
-    setFormData({ ...formData, ...data });
-    console.log(formData);
-    toast("Sending Data...");
-    setStep(step + 1);
+    console.log("Submitting to API:", updatedData);
+    try {
+      const response = await api.post("/seeker-registration", data);
+      console.log("API Response:", response.data);
+      if (response.data.status) {
+        setFormData(data);
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        toast.error(response.data.message);
+      }
+      // Save form data and move to next step
+    } catch (error) {
+      console.error("API Error:", error);
+      toast.error(error);
+    }
   };
 
   const handleBack = () => {
-    setStep(step - 1);
+    setStep((prevStep) => Math.max(1, prevStep - 1)); // Prevents going below step 1
   };
 
   return (
     <>
       <ToastContainer />
-      <AppBarComponent logout={logout} uid={uid} />
+      <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
       {step === 1 && (
         <Step1
           formData={formData}
@@ -75,5 +95,3 @@ function Basic_Info() {
 }
 
 export default Basic_Info;
-// TODO formik, yup validation
-// TODO layout adjustment. so that image will not rerender
