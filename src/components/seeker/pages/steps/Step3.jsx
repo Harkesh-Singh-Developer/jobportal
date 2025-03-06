@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid2";
 import banner1 from "../../../../assets/images/banner1.png";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
   Paper,
   Box,
@@ -13,6 +14,8 @@ import {
   Button,
   IconButton,
   Chip,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -100,11 +103,121 @@ function Step3({ formData, setFormData, onBack, onNext }) {
             </Grid>
 
             {/* Education level */}
-            {experience && (
+            {experience === "y" && (
               <>
                 <Grid size={{ xs: 12 }}>
                   <Typography variant="subtitle2" mb={1}>
                     Total years of experience
+                  </Typography>
+                  <Grid container spacing={3}>
+                    <Grid size={{ xs: 6 }}>
+                      <FormControl
+                        sx={{ minWidth: 120 }}
+                        size="small"
+                        fullWidth
+                      >
+                        <InputLabel size="small">Year</InputLabel>
+                        <Select
+                          value={expYear}
+                          label="Year"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              expYear: e.target.value,
+                            })
+                          }
+                        >
+                          {expYears.map((complyear) => (
+                            <MenuItem key={complyear} value={complyear}>
+                              {complyear}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 6 }}>
+                      <FormControl
+                        sx={{ minWidth: 120 }}
+                        size="small"
+                        fullWidth
+                      >
+                        <InputLabel size="small">Month</InputLabel>
+                        <Select
+                          value={expMonth}
+                          label="Months"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              expMonth: e.target.value,
+                            })
+                          }
+                        >
+                          {expMonths.map((month) => (
+                            <MenuItem key={month} value={month}>
+                              {month}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    id="jobTitle"
+                    label="Job Title"
+                    fullWidth
+                    size="small"
+                  />
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                    <InputLabel size="small">Job Role</InputLabel>
+                    <Select label="Job Role">
+                      <MenuItem value={"Web Developer"}>Web Developer</MenuItem>
+                      <MenuItem value={"Graphic Designer"}>
+                        Graphic Designer
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    id="companyName"
+                    label="Company Name"
+                    fullWidth
+                    size="small"
+                  />
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                    <InputLabel size="small">Industry</InputLabel>
+                    <Select label="Industry">
+                      <MenuItem value={"IT/ITES"}>IT/ITES</MenuItem>
+                      <MenuItem value={"Hospitality"}>Hospitality</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    id="currentSalary"
+                    label="Current Salary"
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <CurrencyRupeeIcon />
+                          </InputAdornment>
+                        ),
+                      },
+                    }}
+                    fullWidth
+                    size="small"
+                  />
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="subtitle2" mb={1}>
+                    Start Date
                   </Typography>
                   <Grid container spacing={3}>
                     <Grid size={{ xs: 6 }}>

@@ -3,10 +3,10 @@ import { ToastContainer, toast } from "react-toastify";
 import api from "../../config/Config";
 import AuthContext from "../../context/Auth";
 import AppBarComponent from "../AppbarComponent";
-import Step1 from "../pages/steps/Step1";
-import Step2 from "../pages/steps/Step2";
-import Step3 from "../pages/steps/Step3"; // Fixed path issue
-
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
 function Basic_Info() {
   const { user, logout } = useContext(AuthContext);
 
@@ -67,7 +67,7 @@ function Basic_Info() {
     <>
       <ToastContainer />
       <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
-      {step === 1 && (
+      {step === 11 && (
         <Step1
           formData={formData}
           setFormData={setFormData}
@@ -84,6 +84,14 @@ function Basic_Info() {
       )}
       {step === 3 && (
         <Step3
+          formData={formData}
+          setFormData={setFormData}
+          onBack={handleBack}
+          onNext={handleNext}
+        />
+      )}
+      {step === 1 && (
+        <Step4
           formData={formData}
           setFormData={setFormData}
           onBack={handleBack}
