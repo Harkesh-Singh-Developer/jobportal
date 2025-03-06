@@ -3,10 +3,15 @@ import { ToastContainer, toast } from "react-toastify";
 import api from "../../config/Config";
 import AuthContext from "../../context/Auth";
 import AppBarComponent from "../AppbarComponent";
+import banner1 from "../../../assets/images/banner1.png";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
 import Step4 from "./steps/Step4";
+import Step5 from "./steps/Step5";
+import Grid from "@mui/material/Grid2";
+import { Box } from "@mui/material";
+import Step6 from "./steps/Step6";
 function Basic_Info() {
   const { user, logout } = useContext(AuthContext);
 
@@ -67,37 +72,62 @@ function Basic_Info() {
     <>
       <ToastContainer />
       <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
-      {step === 11 && (
-        <Step1
-          formData={formData}
-          setFormData={setFormData}
-          onNext={handleNext}
-        />
-      )}
-      {step === 2 && (
-        <Step2
-          formData={formData}
-          setFormData={setFormData}
-          onBack={handleBack}
-          onNext={handleNext}
-        />
-      )}
-      {step === 3 && (
-        <Step3
-          formData={formData}
-          setFormData={setFormData}
-          onBack={handleBack}
-          onNext={handleNext}
-        />
-      )}
-      {step === 1 && (
-        <Step4
-          formData={formData}
-          setFormData={setFormData}
-          onBack={handleBack}
-          onNext={handleNext}
-        />
-      )}
+      <Grid container spacing={2} justifyContent="center" mt={5}>
+        <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <img src={banner1} alt="Banner1" />
+          </Box>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+          {step === 11 && (
+            <Step1
+              formData={formData}
+              setFormData={setFormData}
+              onNext={handleNext}
+            />
+          )}
+          {step === 2 && (
+            <Step2
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 3 && (
+            <Step3
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 1 && (
+            <Step4
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 5 && (
+            <Step5
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 6 && (
+            <Step6
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+        </Grid>
+      </Grid>
     </>
   );
 }
