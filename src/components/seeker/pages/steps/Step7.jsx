@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import banner1 from "../../../../assets/images/banner1.png";
 import {
   Paper,
   Box,
@@ -8,12 +7,19 @@ import {
   Divider,
   Button,
   IconButton,
-  Chip,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+  Radio,
+  RadioGroup,
+  FormLabel,
+  Autocomplete,
   TextField,
   Stack,
+  Chip,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Autocomplete } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
@@ -46,23 +52,13 @@ const initialSkillsOptions = [
   { title: "Node.js" },
   { title: "Vue" },
 ];
+const initialSuggestedSkills = ["Web Developer", "Backend Developer"];
 
-const initialSuggestedSkills = [
-  "React",
-  "JavaScript",
-  "Node.js",
-  "TypeScript",
-  "Redux",
-  "Material-UI",
-  "GraphQL",
-];
-
-function Step4({ formData, setFormData, onBack, onNext }) {
+function Step7({ formData, setFormData, onBack, onNext }) {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [suggestedSkills, setSuggestedSkills] = useState(
     initialSuggestedSkills
   );
-
   // Handle click on suggested skill
   const handleSkillClick = (skill) => {
     setSelectedSkills([...selectedSkills, { title: skill }]); // Add to selected skills
@@ -80,7 +76,6 @@ function Step4({ formData, setFormData, onBack, onNext }) {
       ...removedSkills.map((s) => s.title),
     ]); // Add back to suggestions
   };
-
   return (
     <Paper variant="outlined" sx={{ p: 4 }}>
       <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
@@ -88,11 +83,11 @@ function Step4({ formData, setFormData, onBack, onNext }) {
           <ArrowBackIcon />
         </IconButton>
         <Typography variant="h6" sx={{ whiteSpace: "nowrap", mr: 2 }}>
-          Skills
+          Preferred Job Role
         </Typography>
         <BorderLinearProgress
           variant="determinate"
-          value={60}
+          value={80}
           sx={{ flexGrow: 1, height: 2 }}
         />
       </Box>
@@ -101,7 +96,10 @@ function Step4({ formData, setFormData, onBack, onNext }) {
       <Grid container spacing={2}>
         <Grid size={{ xs: 12 }}>
           <Typography variant="subtitle2" mb={1}>
-            What skills do you have?
+            What job title/role you are looking for?
+          </Typography>
+          <Typography variant="caption" color="initial">
+            You can select upto 5 roles
           </Typography>
 
           {/* Autocomplete for Skill Selection */}
@@ -117,8 +115,8 @@ function Step4({ formData, setFormData, onBack, onNext }) {
               <TextField
                 {...params}
                 variant="outlined"
-                label="Select Skills"
-                placeholder="Skills"
+                label="Select Job Role"
+                placeholder="Job title/role"
               />
             )}
           />
@@ -130,7 +128,7 @@ function Step4({ formData, setFormData, onBack, onNext }) {
             elevation={0}
           >
             <Typography variant="subtitle2" color="initial">
-              Suggested Skills
+              Suggested Job Roles
             </Typography>
             <Divider />
             <Stack direction="row" spacing={1} flexWrap="wrap">
@@ -148,6 +146,9 @@ function Step4({ formData, setFormData, onBack, onNext }) {
           </Paper>
         </Grid>
 
+        {/* Employment Type */}
+        <Grid size={{ xs: 12 }}></Grid>
+
         {/* Next Button */}
         <Grid size={{ xs: 12 }}>
           <Button
@@ -164,4 +165,4 @@ function Step4({ formData, setFormData, onBack, onNext }) {
   );
 }
 
-export default Step4;
+export default Step7;

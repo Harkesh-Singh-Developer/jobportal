@@ -12,6 +12,9 @@ import Step5 from "./steps/Step5";
 import Grid from "@mui/material/Grid2";
 import { Box } from "@mui/material";
 import Step6 from "./steps/Step6";
+import Step7 from "./steps/Step7";
+import Step8 from "./steps/Step8";
+import Step9 from "./steps/Step9";
 function Basic_Info() {
   const { user, logout } = useContext(AuthContext);
 
@@ -102,7 +105,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 1 && (
+          {step === 4 && (
             <Step4
               formData={formData}
               setFormData={setFormData}
@@ -120,6 +123,30 @@ function Basic_Info() {
           )}
           {step === 6 && (
             <Step6
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 7 && (
+            <Step7
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 8 && (
+            <Step8
+              formData={formData}
+              setFormData={setFormData}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          )}
+          {step === 1 && (
+            <Step9
               formData={formData}
               setFormData={setFormData}
               onBack={handleBack}

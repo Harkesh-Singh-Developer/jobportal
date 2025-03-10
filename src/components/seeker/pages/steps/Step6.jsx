@@ -85,7 +85,7 @@ function Step6({ formData, setFormData, onBack, onNext }) {
 
       <Grid container spacing={2}>
         {/* Preferred Shifts */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControl component="fieldset">
             <FormLabel component="legend">Preferred Shifts</FormLabel>
             <FormGroup row>
@@ -114,7 +114,7 @@ function Step6({ formData, setFormData, onBack, onNext }) {
         </Grid>
 
         {/* Employment Type */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControl component="fieldset">
             <FormLabel component="legend">Employment Type</FormLabel>
             <RadioGroup
@@ -136,7 +136,7 @@ function Step6({ formData, setFormData, onBack, onNext }) {
         </Grid>
 
         {/* Job Location */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControl component="fieldset">
             <FormLabel component="legend">Job Location</FormLabel>
             <RadioGroup value={jobLocation} onChange={handleLocationChange}>
@@ -160,7 +160,7 @@ function Step6({ formData, setFormData, onBack, onNext }) {
         </Grid>
 
         {/* Next Button */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Button
             variant="contained"
             color="primary"
