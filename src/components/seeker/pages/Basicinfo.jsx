@@ -27,15 +27,6 @@ function Basic_Info() {
     dob: "",
     selectedGender: "",
     email: "",
-    selectedEducation: "",
-    selectedEducationLevel: "",
-    degree: "",
-    college: "",
-    completionMonth: "",
-    completionYear: "",
-    experience: "",
-    expMonth: "",
-    expYear: "",
   });
 
   useEffect(() => {
@@ -46,24 +37,36 @@ function Basic_Info() {
       }));
     }
   }, [user]);
+
   // Function to Handle Step Change
   const handleNext = async (data) => {
-    const updatedData = { ...data, uid: user?.uid || formData.uid }; // Ensure uid is always included
-
-    console.log("Submitting to API:", updatedData);
     try {
-      const response = await api.post("/seeker-registration", data);
-      console.log("API Response:", response.data);
-      if (response.data.status) {
-        setFormData(data);
+      const updatedData = { ...data, uid: user?.uid || formData.uid }; // Ensure uid is included
+      console.log("Submitting to API:", updatedData);
+
+      const stepEndpoints = {
+        2: "/seeker-registration",
+        1: "/seeker-education",
+        3: "/skills",
+        4: "/experience",
+        5: "/projects",
+        6: "/certifications",
+        7: "/preferences",
+        8: "/resume",
+        9: "/summary",
+      };
+      const endpoint = stepEndpoints[step] || "/default-endpoint";
+      const response = await api.post(endpoint, updatedData); // Ensure await is used
+
+      if (response.data?.status) {
+        setFormData(updatedData);
         setStep((prevStep) => prevStep + 1);
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data?.message || "An error occurred");
       }
-      // Save form data and move to next step
     } catch (error) {
       console.error("API Error:", error);
-      toast.error(error);
+      toast.error(error?.message || "An API error occurred");
     }
   };
 
@@ -89,7 +92,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 2 && (
+          {step === 1 && (
             <Step2
               formData={formData}
               setFormData={setFormData}
@@ -145,7 +148,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 1 && (
+          {step === 9 && (
             <Step9
               formData={formData}
               setFormData={setFormData}

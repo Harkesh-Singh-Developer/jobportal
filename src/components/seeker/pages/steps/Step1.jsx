@@ -41,7 +41,6 @@ function Step1({ formData, setFormData, onNext }) {
     initialValues: formData,
     validationSchema: step1Schema,
     onSubmit: async (values) => {
-      console.log(values);
       setFormData(values);
       onNext(values);
     },
@@ -57,7 +56,7 @@ function Step1({ formData, setFormData, onNext }) {
 
           <BorderLinearProgress
             variant="determinate"
-            value={10}
+            value={5}
             sx={{ flexGrow: 1, height: 2 }}
           />
         </Box>
