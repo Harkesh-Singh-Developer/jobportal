@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import api from "../../config/Config";
 import AuthContext from "../../context/Auth";
 import AppBarComponent from "../AppbarComponent";
 import banner1 from "../../../assets/images/banner1.png";
@@ -41,16 +39,10 @@ function Basic_Info() {
 
   // Function to Handle Step Change
   const handleNext = async (data) => {
-    try {
-      const updatedData = { ...data, uid: user?.uid || formData.uid }; // Ensure uid is included
-
-      console.log(step);
-      setFormData(updatedData);
-      setStep((prevStep) => prevStep + 1);
-    } catch (error) {
-      console.error("API Error:", error);
-      toast.error(error?.message || "An API error occurred");
-    }
+    const updatedData = { ...data, uid: user?.uid || formData.uid }; // Ensure uid is included
+    console.log(step);
+    setFormData(updatedData);
+    setStep((prevStep) => prevStep + 1);
   };
 
   const handleBack = () => {
@@ -59,7 +51,6 @@ function Basic_Info() {
 
   return (
     <>
-      <ToastContainer />
       <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
       <Grid container spacing={2} justifyContent="center" mt={5}>
         <Grid size={{ xs: 12, sm: 4, md: 4, lg: 4 }}>
@@ -68,7 +59,7 @@ function Basic_Info() {
           </Box>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-          {step === 1 && (
+          {step === 11 && (
             <Step1
               formData={formData}
               setFormData={setFormData}
@@ -123,7 +114,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 8 && (
+          {step === 1 && (
             <Step8
               formData={formData}
               setFormData={setFormData}
