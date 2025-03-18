@@ -1,4 +1,8 @@
 import React from "react";
+import api from "../../../config/Config";
+import { useContext } from "react";
+import AuthContext from "../../../context/Auth";
+import { ToastContainer, toast } from "react-toastify";
 import Grid from "@mui/material/Grid2";
 import {
   Paper,
@@ -12,6 +16,8 @@ import {
   Button,
   IconButton,
   Chip,
+  FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useFormik } from "formik";
@@ -63,34 +69,59 @@ const completionYears = Array.from(
   (_, i) => 1980 + i
 );
 function Step2({ formData, setFormData, onBack, onNext }) {
+  const { user } = useContext(AuthContext);
+
   const formik = useFormik({
     initialValues: {
-      selectedEducation: "",
-      selectedEducationLevel: "",
-      degree: "",
-      college: "",
-      completionMonth: "",
-      completionYear: "",
-      experience: "",
-      expMonth: "",
-      expYear: "",
+      selectedEducation: formData.selectedEducation || "",
+      selectedEducationLevel: formData.selectedEducationLevel || "",
+      degree: formData.degree || "",
+      college: formData.college || "",
+      completionMonth: formData.completionMonth || "",
+      completionYear: formData.completionYear || "",
     },
+    enableReinitialize: true,
 
-    // validationSchema: step2Schema,
+    validationSchema: step2Schema,
     onSubmit: async (values) => {
-      setFormData(values);
-      onNext(values);
+      const formattedData = {
+        uid: user?.uid,
+        selectedEducation: values.selectedEducation,
+        college: values.college,
+        degree: values.degree,
+        completionMonth: "10",
+        completionYear: "2021",
+        college_medium: "English", //Hardcoded
+        education_type: "1", //Hardcoded
+        education_specialized: "Computer Science", //Hardcoded
+      };
+
+      try {
+        const response = await api.post("/seeker-education", formattedData);
+        console.log(response.data);
+
+        if (response.data?.status) {
+          setFormData((prev) => ({ ...prev, ...values }));
+          onNext(values);
+        } else {
+          toast.error("Error submitting data");
+        }
+      } catch (error) {
+        toast.error("API Error");
+      }
+      // console.log(formattedData);
     },
   });
   return (
     <form onSubmit={formik.handleSubmit}>
+      <ToastContainer />
       <Paper variant="outlined" sx={{ p: 4 }}>
         <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
           <IconButton onClick={onBack}>
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6" sx={{ whiteSpace: "nowrap", mr: 2 }}>
-            Education Details
+            Education Details -
           </Typography>
 
           <BorderLinearProgress
@@ -109,23 +140,32 @@ function Step2({ formData, setFormData, onBack, onNext }) {
             <Chip
               label="Yes"
               size="small"
-              color={formData.selectedEducation === "y" ? "primary" : "default"}
-              onClick={() =>
-                setFormData({ ...formData, selectedEducation: "y" })
+              color={
+                formik.values.selectedEducation === "y" ? "primary" : "default"
               }
+              onClick={() => formik.setFieldValue("selectedEducation", "y")}
             />
+
             <Chip
               label="No"
               size="small"
-              color={formData.selectedEducation === "n" ? "primary" : "default"}
-              onClick={() =>
-                setFormData({ ...formData, selectedEducation: "n" })
+              color={
+                formik.values.selectedEducation === "n" ? "primary" : "default"
               }
+              onClick={() => formik.setFieldValue("selectedEducation", "n")}
             />
+            {/* Error */}
+            {formik.touched.selectedEducation &&
+              formik.errors.selectedEducation && (
+                <Typography variant="caption" color="error">
+                  {formik.errors.selectedEducation}
+                </Typography>
+              )}
+            {/* Error */}
           </Grid>
 
           {/* Education level */}
-          {formData.selectedEducation === "y" && (
+          {formik.values.selectedEducation === "y" && (
             <Grid size={{ xs: 12 }}>
               <Typography variant="subtitle2" mb={1}>
                 Select your level of education?
@@ -147,37 +187,47 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                       label={level}
                       size="small"
                       color={
-                        formData.selectedEducationLevel === level
+                        formik.values.selectedEducationLevel === level
                           ? "primary"
                           : "default"
                       }
                       onClick={() =>
-                        setFormData({
-                          ...formData,
-                          selectedEducationLevel: level,
-                        })
+                        formik.setFieldValue("selectedEducationLevel", level)
                       }
                     />
                   </Grid>
                 ))}
+                {/* Error */}
+                {formik.touched.selectedEducationLevel &&
+                  formik.errors.selectedEducationLevel && (
+                    <Typography variant="caption" color="error">
+                      {formik.errors.selectedEducationLevel}
+                    </Typography>
+                  )}
+                {/* Error */}
               </Grid>
             </Grid>
           )}
           {/* Degree Details */}
-          {formData.selectedEducationLevel && (
+          {formik.values.selectedEducationLevel && (
             <>
               <Grid size={{ xs: 12 }}>
                 <Typography variant="subtitle2" mb={1}>
                   Education Details
                 </Typography>
-                <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                <FormControl
+                  sx={{ minWidth: 120 }}
+                  size="small"
+                  fullWidth
+                  error={formik.touched.degree && Boolean(formik.errors.degree)}
+                >
                   <InputLabel size="small">Degree</InputLabel>
                   <Select
-                    value={formData.degree}
+                    name="degree"
                     label="Degree"
-                    onChange={(e) =>
-                      setFormData({ ...formData, degree: e.target.value })
-                    }
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.degree || ""}
                   >
                     {degrees.map((deg) => (
                       <MenuItem key={deg} value={deg}>
@@ -185,17 +235,27 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  {formik.touched.degree && formik.errors.degree && (
+                    <FormHelperText>{formik.errors.degree}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                <FormControl
+                  sx={{ minWidth: 120 }}
+                  size="small"
+                  fullWidth
+                  error={
+                    formik.touched.college && Boolean(formik.errors.college)
+                  }
+                >
                   <InputLabel size="small">College</InputLabel>
                   <Select
-                    value={formData.college}
+                    name="college"
                     label="College"
-                    onChange={(e) =>
-                      setFormData({ ...formData, college: e.target.value })
-                    }
+                    value={formik.values.college || ""}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   >
                     {colleges.map((col) => (
                       <MenuItem key={col} value={col}>
@@ -203,6 +263,9 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  {formik.touched.college && formik.errors.college && (
+                    <FormHelperText>{formik.errors.college}</FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               {/* Completion year */}
@@ -212,17 +275,22 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                 </Typography>
                 <Grid container spacing={3}>
                   <Grid size={{ xs: 6 }}>
-                    <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                    <FormControl
+                      sx={{ minWidth: 120 }}
+                      size="small"
+                      fullWidth
+                      error={
+                        formik.touched.completionMonth &&
+                        Boolean(formik.errors.completionMonth)
+                      }
+                    >
                       <InputLabel size="small">Month</InputLabel>
                       <Select
-                        value={formData.completionMonth}
+                        name="completionMonth"
                         label="Month"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            completionMonth: e.target.value,
-                          })
-                        }
+                        value={formik.values.completionMonth || ""}
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
                       >
                         {months.map((month) => (
                           <MenuItem key={month} value={month}>
@@ -230,20 +298,31 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                           </MenuItem>
                         ))}
                       </Select>
+                      {formik.touched.completionMonth &&
+                        formik.errors.completionMonth && (
+                          <FormHelperText>
+                            {formik.errors.completionMonth}
+                          </FormHelperText>
+                        )}
                     </FormControl>
                   </Grid>
                   <Grid size={{ xs: 6 }}>
-                    <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
+                    <FormControl
+                      sx={{ minWidth: 120 }}
+                      size="small"
+                      fullWidth
+                      error={
+                        formik.touched.completionYear &&
+                        Boolean(formik.errors.completionYear)
+                      }
+                    >
                       <InputLabel size="small">Year</InputLabel>
                       <Select
-                        value={formData.completionYear}
+                        name="completionYear"
                         label="Year"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            completionYear: e.target.value,
-                          })
-                        }
+                        value={formik.values.completionYear || ""}
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
                       >
                         {completionYears.map((complyear) => (
                           <MenuItem key={complyear} value={complyear}>
@@ -251,6 +330,13 @@ function Step2({ formData, setFormData, onBack, onNext }) {
                           </MenuItem>
                         ))}
                       </Select>
+                      {/* Error message moved outside the Select component */}
+                      {formik.touched.completionYear &&
+                        formik.errors.completionYear && (
+                          <FormHelperText>
+                            {formik.errors.completionYear}
+                          </FormHelperText>
+                        )}
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -261,12 +347,17 @@ function Step2({ formData, setFormData, onBack, onNext }) {
           {/* Submit Button Step 2 */}
           <Grid size={{ xs: 12 }}>
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               fullWidth
-              onClick={() => onNext(formData)}
+              disabled={formik.isSubmitting}
             >
-              Next
+              {formik.isSubmitting ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Next"
+              )}
             </Button>
           </Grid>
         </Grid>

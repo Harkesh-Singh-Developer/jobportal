@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import api from "../../../config/Config";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import { useContext } from "react";
+import AuthContext from "../../../context/Auth";
 import { step1Schema } from "../../validationschema/validationSchemas";
 import {
   Paper,
@@ -9,6 +13,7 @@ import {
   TextField,
   Chip,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/material/styles";
@@ -37,17 +42,53 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 // LinerProgress Adjust
 function Step1({ formData, setFormData, onNext }) {
+  const { user } = useContext(AuthContext);
+
+  // Load stored data into form if available
+  useEffect(() => {
+    if (!formData?.name) {
+      setFormData((prev) => ({
+        ...prev,
+        uid: prev?.uid || user?.uid || "",
+        name: prev?.name || "",
+        dob: prev?.dob || "",
+        selectedGender: prev?.selectedGender || "",
+        email: prev?.email || "",
+      }));
+    }
+  }, []);
+
   const formik = useFormik({
-    initialValues: formData,
+    initialValues: {
+      uid: user?.uid || "",
+      name: formData.name || "",
+      dob: formData.dob || "",
+      selectedGender: formData.selectedGender || "",
+      email: formData.email || "",
+    },
+    enableReinitialize: true,
     validationSchema: step1Schema,
     onSubmit: async (values) => {
-      setFormData(values);
-      onNext(values);
+      try {
+        console.log(values);
+        const response = await api.post("/seeker-registration", values);
+        console.log(response.data);
+
+        if (response.data?.status) {
+          setFormData((prev) => ({ ...prev, ...values }));
+          onNext(values);
+        } else {
+          toast.error(response.data?.message || "An error occurred");
+        }
+      } catch (error) {
+        toast.error("API Error");
+      }
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      <ToastContainer />
       <Paper variant="outlined" sx={{ p: 4 }}>
         <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
           <Typography variant="h6" sx={{ whiteSpace: "nowrap", mr: 2 }}>
@@ -83,12 +124,12 @@ function Step1({ formData, setFormData, onNext }) {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
+              name="dob"
               type="date"
               label="Date of Birth"
               size="small"
               slotProps={{ inputLabel: { shrink: true } }}
               id="dob"
-              name="dob"
               required
               value={formik.values.dob}
               onChange={formik.handleChange}
@@ -142,8 +183,18 @@ function Step1({ formData, setFormData, onNext }) {
 
           {/* Submit Button */}
           <Grid size={{ xs: 12 }}>
-            <Button variant="contained" color="primary" fullWidth type="submit">
-              Next
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Next"
+              )}
             </Button>
           </Grid>
         </Grid>
