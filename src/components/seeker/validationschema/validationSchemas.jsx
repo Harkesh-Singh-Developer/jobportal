@@ -17,7 +17,14 @@ export const step2Schema = Yup.object().shape({
 });
 
 export const step3Schema = Yup.object().shape({
-  experience: Yup.string().required("Required"),
-  expYears: Yup.string().required("Required"),
-  expMonth: Yup.string().required("Required"),
+  experienceStatus: Yup.string().required("Required"),
+  experienceYear: Yup.string().required("Year Required"),
+  experienceMonth: Yup.string().required("Month Required"),
+  jobTitle: Yup.string().required("Required"),
+  jobRole: Yup.string().required("Required"),
+  companyName: Yup.string().required("Required"),
+  industry: Yup.string().required("Required"),
+  monthlySalary: Yup.string().required("Required"),
+  startCompanyMonth: Yup.string().required("Required"),
+  startCompanyYear: Yup.string().required("Required"),
 });
