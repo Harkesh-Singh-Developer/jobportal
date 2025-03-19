@@ -103,6 +103,7 @@ function Step8({ formData, setFormData, onBack, onNext }) {
           ...prevData,
           resumeUrl: response.data.file_path, // Store the file path in formData
         }));
+        onNext(formData);
       }
     } catch (error) {
       setUploading(false);

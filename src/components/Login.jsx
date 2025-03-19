@@ -42,6 +42,7 @@ function Login() {
       number: mobile,
     };
     try {
+      console.log(data);
       const response = await api.post("/login-registration", data);
       console.log(response.data);
       if (response.data.status) {
