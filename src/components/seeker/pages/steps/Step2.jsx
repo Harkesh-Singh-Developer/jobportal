@@ -77,26 +77,41 @@ function Step2({ formData, setFormData, onBack, onNext }) {
       selectedEducationLevel: formData.selectedEducationLevel || "",
       degree: formData.degree || "",
       college: formData.college || "",
-      completionMonth: formData.completionMonth || "",
-      completionYear: formData.completionYear || "",
+      completionMonth: formData.completionMonth || 0,
+      completionYear: formData.completionYear || 0,
     },
     enableReinitialize: true,
 
     validationSchema: step2Schema,
     onSubmit: async (values) => {
+      const monthMapping = {
+        January: 1,
+        February: 2,
+        March: 3,
+        April: 4,
+        May: 5,
+        June: 6,
+        July: 7,
+        August: 8,
+        September: 9,
+        October: 10,
+        November: 11,
+        December: 12,
+      };
       const formattedData = {
         uid: user?.uid,
         selectedEducation: values.selectedEducation,
         college: values.college,
-        degree: values.degree,
-        completionMonth: "10",
-        completionYear: "2021",
-        college_medium: "English", //Hardcoded
-        education_type: "1", //Hardcoded
-        education_specialized: "Computer Science", //Hardcoded
+        nameOfDegree: values.degree,
+        completionMonth: monthMapping[values.completionMonth] || 0,
+        completionYear: values.completionYear,
+        collegeMedium: "English", //Hardcoded
+        educationType: 1, //Hardcoded, 1-regular, 2-distance
+        educationSpecialized: "Computer Science", //Hardcoded
       };
 
       try {
+        console.log(formattedData);
         const response = await api.post("/seeker-education", formattedData);
         console.log(response.data);
 
@@ -165,7 +180,7 @@ function Step2({ formData, setFormData, onBack, onNext }) {
           </Grid>
 
           {/* Education level */}
-          {formik.values.selectedEducation === "y" && (
+          {formik.values.selectedEducation && (
             <Grid size={{ xs: 12 }}>
               <Typography variant="subtitle2" mb={1}>
                 Select your level of education?
