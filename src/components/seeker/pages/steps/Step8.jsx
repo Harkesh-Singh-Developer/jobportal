@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Grid from "@mui/material/Grid2";
 import {
   Paper,
@@ -12,6 +12,8 @@ import {
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { styled } from "@mui/material/styles";
+import api from "../../../config/Config"; // Import API instance
+import AuthContext from "../../../context/Auth"; // Import Auth Context
 
 // Styled Progress Bar
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -36,6 +38,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function Step8({ formData, setFormData, onBack, onNext }) {
+  const { user } = useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
@@ -66,8 +69,8 @@ function Step8({ formData, setFormData, onBack, onNext }) {
     setSelectedFile(file);
   };
 
-  // Upload Simulation
-  const handleUpload = () => {
+  // Upload File to Laravel API
+  const handleUpload = async () => {
     if (!selectedFile) {
       setError("Please select a valid file before proceeding.");
       return;
@@ -76,19 +79,33 @@ function Step8({ formData, setFormData, onBack, onNext }) {
     setUploading(true);
     setUploadProgress(0);
 
-    const fakeUpload = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(fakeUpload);
-          setTimeout(() => {
-            setUploading(false);
-            onNext(formData); // Move to next step after upload
-          }, 500);
-          return 100;
-        }
-        return prev + 10;
+    const formData = new FormData();
+    formData.append("resume", selectedFile);
+    formData.append("uid", user?.uid); // Pass the user ID
+
+    try {
+      const response = await api.post("/seeker-resume", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(percentCompleted);
+        },
       });
-    }, 300);
+
+      if (response.status === 200) {
+        setUploading(false);
+        setUploadProgress(100);
+        setFormData({ ...formData, resumeUrl: response.data.file_path });
+        onNext(); // Move to the next step
+      }
+    } catch (error) {
+      setUploading(false);
+      setError("Failed to upload resume. Please try again.");
+    }
   };
 
   return (
@@ -129,12 +146,11 @@ function Step8({ formData, setFormData, onBack, onNext }) {
         {/* Upload Button */}
         <Button
           component="label"
-          role={undefined}
           variant="contained"
           startIcon={<CloudUploadIcon />}
           sx={{ mt: 2 }}
         >
-          Upload
+          Browse
           <VisuallyHiddenInput
             type="file"
             accept=".pdf,.doc,.docx"
@@ -173,9 +189,9 @@ function Step8({ formData, setFormData, onBack, onNext }) {
         </Box>
       )}
 
-      {/* Next Button */}
+      {/* Upload Button */}
       <Grid container justifyContent="center" sx={{ mt: 3 }}>
-        <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+        <Grid size={{ xs: 12 }}>
           <Button
             variant="contained"
             color="primary"
@@ -183,7 +199,7 @@ function Step8({ formData, setFormData, onBack, onNext }) {
             onClick={handleUpload}
             disabled={!selectedFile || uploading}
           >
-            {uploading ? "Uploading..." : "Next"}
+            {uploading ? "Uploading..." : "Upload Resume"}
           </Button>
         </Grid>
       </Grid>
