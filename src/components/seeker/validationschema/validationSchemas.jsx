@@ -79,3 +79,7 @@ export const step5Schema = Yup.object().shape({
     .required("English level is required")
     .min(1, "Please select a valid option"), // Ensures a valid selection
 });
+
+export const step7Schema = Yup.object().shape({
+  selectedJobRoles: Yup.array().min(1, "At least one Job Role is required"),
+});

@@ -3,8 +3,8 @@ import api from "../../../config/Config";
 import { useContext } from "react";
 import AuthContext from "../../../context/Auth";
 import { ToastContainer, toast } from "react-toastify";
-
 import Grid from "@mui/material/Grid2";
+import { step7Schema } from "../../validationschema/validationSchemas";
 import { useFormik } from "formik";
 import {
   Paper,
@@ -62,6 +62,7 @@ function Step7({ formData, setFormData, onBack, onNext }) {
       uid: user?.uid || "",
       selectedJobRoles: formData.selectedJobRoles || [],
     },
+    validationSchema: step7Schema,
     onSubmit: async (values) => {
       const formattedData = {
         uid: user?.uid || "",
@@ -70,7 +71,7 @@ function Step7({ formData, setFormData, onBack, onNext }) {
       console.log(formattedData);
       try {
         const response = await api.post("/seeker-job-roles", formattedData);
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data?.status) {
           setFormData((prev) => ({ ...prev, ...values }));
           onNext(values);
@@ -154,6 +155,14 @@ function Step7({ formData, setFormData, onBack, onNext }) {
                   variant="outlined"
                   label="Select Job Role"
                   placeholder="Job title/role"
+                  error={
+                    formik.touched.selectedJobRoles &&
+                    Boolean(formik.errors.selectedJobRoles)
+                  }
+                  helperText={
+                    formik.touched.selectedJobRoles &&
+                    formik.errors.selectedJobRoles
+                  }
                 />
               )}
             />
