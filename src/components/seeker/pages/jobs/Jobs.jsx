@@ -96,7 +96,7 @@ function Jobs() {
                 Showing 379 jobs based on your profile
               </Typography>
             </Grid>
-            <Grid size={{ xs: 3, sm: 3, md: 3 }}>
+            <Grid size={{ xs: 4, sm: 3, md: 3 }}>
               <Paper
                 elevation={2}
                 variant="elevation"
@@ -110,7 +110,7 @@ function Jobs() {
                 Filters
               </Paper>
             </Grid>
-            <Grid size={{ xs: 5, sm: 5, md: 5 }}>
+            <Grid size={{ xs: 8, sm: 5, md: 5 }}>
               <Paper
                 elevation={2}
                 variant="elevation"
@@ -124,7 +124,7 @@ function Jobs() {
                 Jobs List
               </Paper>
             </Grid>
-            <Grid size={{ xs: 2, sm: 2, md: 2 }}>
+            <Grid size={{ xs: 4, sm: 2, md: 2 }}>
               <Paper
                 elevation={0}
                 variant="outlined"
