@@ -96,11 +96,11 @@ function Step8({ formData, setFormData, onBack, onNext }) {
         },
       });
 
-      if (response.status === 200) {
+      console.log(response.data);
+      if (response.data?.status) {
         setUploading(false);
         setUploadProgress(100);
         setFormData({ ...formData, resumeUrl: response.data.file_path });
-        onNext(); // Move to the next step
       }
     } catch (error) {
       setUploading(false);
