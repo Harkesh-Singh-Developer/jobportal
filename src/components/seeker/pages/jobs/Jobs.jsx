@@ -5,10 +5,10 @@ import Grid from "@mui/material/Grid2";
 import { Box } from "@mui/material";
 
 function Jobs() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <AppBarComponent uid={user?.uid} />
+      <AppBarComponent uid={user?.uid} logout={logout} />
 
       {/* Main Container */}
       <Grid container spacing={2} sx={{ p: 2 }}>
