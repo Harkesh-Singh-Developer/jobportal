@@ -8,7 +8,7 @@ function Jobs() {
   const { user, logout } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <AppBarComponent uid={user?.uid} logout={logout} />
+      <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
 
       {/* Main Container */}
       <Grid container spacing={2} sx={{ p: 2 }}>

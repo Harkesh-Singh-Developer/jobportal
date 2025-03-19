@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // ✅ Move useNavigate here
 
   useEffect(() => {
     // Load user data from localStorage
@@ -39,7 +41,6 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // New function to update user state
   const updateUser = (newData) => {
     setUser((prev) => {
       const updatedUser = { ...prev, ...newData };
@@ -56,6 +57,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.clear();
     setUser(null);
+    navigate("/"); //
   };
 
   return (
