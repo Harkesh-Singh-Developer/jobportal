@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Fallbackloader from "./Fallbackloader";
 
 const Login = React.lazy(() => import("../Login"));
+const Jobs = React.lazy(() => import("../seeker/pages/jobs/Jobs"));
 const Profile = React.lazy(() => import("../seeker/pages/Profile"));
 const Basic_Info = React.lazy(() => import("../seeker/pages/Basicinfo"));
 import AuthContext from "../context/Auth";
@@ -18,7 +19,7 @@ const AppRoutes = () => {
           element={
             user?.isAuthenticated ? (
               user?.isProfileCompleted ? (
-                <Navigate to="/profile" />
+                <Navigate to="/jobs" />
               ) : (
                 <Navigate to="/Basic_info" />
               )
@@ -51,6 +52,7 @@ const AppRoutes = () => {
         />
 
         {/* Other Routes */}
+        <Route path="/jobs" element={<Jobs />} />
         <Route path="/update" element={<div>Update Page</div>} />
         <Route path="/create" element={<div>Create Page</div>} />
       </Routes>

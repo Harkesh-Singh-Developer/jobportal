@@ -52,7 +52,7 @@ const AppBarComponent = ({ logout, uid }) => {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>UID : {uid}</MenuItem>
+            {/* <MenuItem onClick={handleClose}>UID : {uid}</MenuItem> */}
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My Jobs</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
