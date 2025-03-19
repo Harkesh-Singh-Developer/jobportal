@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid2";
-import {
-  Paper,
-  Box,
-  Typography,
-  Divider,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Paper, Typography, Divider, Button } from "@mui/material";
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { styled } from "@mui/material/styles";
 
 const VisuallyHiddenInput = styled("input")({
