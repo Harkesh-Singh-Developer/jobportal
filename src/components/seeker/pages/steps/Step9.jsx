@@ -36,7 +36,7 @@ function Step9({ formData, setFormData, onBack, onNext }) {
           toast.success(response.data.message);
           updateUser({ isProfileCompleted: true });
           setTimeout(() => {
-            navigate("/profile", { replace: true });
+            navigate("/jobs", { replace: true });
           }, 2000);
         } else {
           toast.error(response.data.message);
