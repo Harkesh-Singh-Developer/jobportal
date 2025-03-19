@@ -69,3 +69,13 @@ export const step3Schema = Yup.object().shape({
     otherwise: (schema) => schema.nullable(),
   }),
 });
+
+export const step4Schema = Yup.object().shape({
+  selectedSkills: Yup.array().min(1, "At least one skill is required"),
+});
+
+export const step5Schema = Yup.object().shape({
+  engLevel: Yup.number()
+    .required("English level is required")
+    .min(1, "Please select a valid option"), // Ensures a valid selection
+});

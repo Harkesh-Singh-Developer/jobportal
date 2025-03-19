@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid2";
 import AuthContext from "../../../context/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
+import { step4Schema } from "../../validationschema/validationSchemas";
 import {
   Paper,
   Box,
@@ -68,16 +69,19 @@ function Step4({ formData, setFormData, onBack, onNext }) {
       uid: user?.uid || "",
       selectedSkills: formData.selectedSkills || [],
     },
+    validationSchema: step4Schema,
     onSubmit: async (values) => {
       const formattedData = {
         uid: values.uid,
         skills: values.selectedSkills.map((skill) => skill.title),
       };
-      setFormData((prev) => ({ ...prev, ...values }));
+
       try {
         const response = await api.post("/seeker-skills", formattedData);
-        if (response.data?.success) {
-          toast.success("Skills saved successfully");
+
+        if (response.data?.status) {
+          setFormData((prev) => ({ ...prev, ...values }));
+          onNext(values);
         } else {
           toast.error(response.data.message || "An API error occurred");
         }
@@ -153,6 +157,14 @@ function Step4({ formData, setFormData, onBack, onNext }) {
                   variant="outlined"
                   label="Select Skills"
                   placeholder="Skills"
+                  error={
+                    formik.touched.selectedSkills &&
+                    Boolean(formik.errors.selectedSkills)
+                  }
+                  helperText={
+                    formik.touched.selectedSkills &&
+                    formik.errors.selectedSkills
+                  }
                 />
               )}
             />
