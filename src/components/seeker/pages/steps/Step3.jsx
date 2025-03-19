@@ -22,6 +22,7 @@ import {
   TextField,
   InputAdornment,
   FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -55,22 +56,22 @@ const startYears = Array.from(
   (_, i) => new Date().getFullYear() - i
 );
 const startMonths = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  { label: "January", value: 1 },
+  { label: "February", value: 2 },
+  { label: "March", value: 3 },
+  { label: "April", value: 4 },
+  { label: "May", value: 5 },
+  { label: "June", value: 6 },
+  { label: "July", value: 7 },
+  { label: "August", value: 8 },
+  { label: "September", value: 9 },
+  { label: "October", value: 10 },
+  { label: "November", value: 11 },
+  { label: "December", value: 12 },
 ];
 
-const expMonths = ["1", "2", "3", "4"];
-const expYears = ["1", "2", "3", "4"];
+const expMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const expYears = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 function Step3({ formData, setFormData, onBack, onNext }) {
   const { user } = useContext(AuthContext);
@@ -82,15 +83,44 @@ function Step3({ formData, setFormData, onBack, onNext }) {
       experienceMonth: formData.experienceMonth || "",
       jobTitle: formData.jobTitle || "",
       jobRole: formData.jobRole || "",
+      jobType: formData.jobType || "",
       companyName: formData.companyName || "",
       industry: formData.industry || "",
-      monthlySalary: formData.monthlySalary || "",
+      monthlySalary: formData.monthlySalary || 0,
       startCompanyMonth: formData.startCompanyMonth || "",
       startCompanyYear: formData.startCompanyYear || "",
     },
     validationSchema: step3Schema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        let formattedData = { ...values };
+        if (values.experienceStatus === 0) {
+          formattedData = {
+            uid: values.uid,
+            experienceStatus: 0,
+            experienceYear: null,
+            experienceMonth: null,
+            jobTitle: null,
+            jobRole: null,
+            JobType: null, // 1 for full time, 0 for part time
+            companyName: null,
+            industry: null,
+            monthlySalary: null,
+            startCompanyMonth: null,
+            startCompanyYear: null,
+          };
+        }
+        // console.log(formattedData);
+        const response = await api.post("/seeker-experience", formattedData);
+        if (response.data?.status) {
+          setFormData((prev) => ({ ...prev, ...values }));
+          onNext(values);
+        } else {
+          toast.error(response.data?.message);
+        }
+      } catch (error) {
+        toast.error("API Error");
+      }
     },
   });
   return (
@@ -209,15 +239,17 @@ function Step3({ formData, setFormData, onBack, onNext }) {
                           </MenuItem>
                         ))}
                       </Select>
-                      {formik.touched.experienceMonth && formik.errors.experienceMonth && (
-                        <FormHelperText>
-                          {formik.errors.experienceMonth}
-                        </FormHelperText>
-                      )}
+                      {formik.touched.experienceMonth &&
+                        formik.errors.experienceMonth && (
+                          <FormHelperText>
+                            {formik.errors.experienceMonth}
+                          </FormHelperText>
+                        )}
                     </FormControl>
                   </Grid>
                 </Grid>
               </Grid>
+
               <Grid size={{ xs: 12 }}>
                 <TextField
                   name="jobTitle"
@@ -305,9 +337,36 @@ function Step3({ formData, setFormData, onBack, onNext }) {
                 </FormControl>
               </Grid>
               <Grid size={{ xs: 12 }}>
+                <Typography variant="subtitle2" mb={1}>
+                  What type of Job?
+                </Typography>
+                <Chip
+                  label="Full Time"
+                  size="small"
+                  color={formik.values.jobType === 1 ? "primary" : "default"}
+                  onClick={() => formik.setFieldValue("jobType", 1)}
+                />
+                <Chip
+                  label="Part Time"
+                  size="small"
+                  color={formik.values.jobType === 0 ? "primary" : "default"}
+                  onClick={() => formik.setFieldValue("jobType", 0)}
+                />
+
+                {/* Error */}
+                {formik.touched.jobType && formik.errors.jobType && (
+                  <Typography variant="caption" color="error">
+                    {formik.errors.jobType}
+                  </Typography>
+                )}
+                {/* Error */}
+              </Grid>
+
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   name="monthlySalary"
                   label="Current Salary"
+                  type="number"
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -387,8 +446,8 @@ function Step3({ formData, setFormData, onBack, onNext }) {
                         onBlur={formik.handleBlur}
                       >
                         {startMonths.map((month) => (
-                          <MenuItem key={month} value={month}>
-                            {month}
+                          <MenuItem key={month.value} value={month.value}>
+                            {month.label}
                           </MenuItem>
                         ))}
                       </Select>
@@ -407,8 +466,18 @@ function Step3({ formData, setFormData, onBack, onNext }) {
 
           {/* Submit Button Step 2 */}
           <Grid size={{ xs: 12 }}>
-            <Button variant="contained" color="primary" fullWidth type="submit">
-              Next
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              type="submit"
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Next"
+              )}
             </Button>
           </Grid>
         </Grid>

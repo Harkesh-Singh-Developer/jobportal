@@ -111,7 +111,6 @@ function Step2({ formData, setFormData, onBack, onNext }) {
       };
 
       try {
-        console.log(formattedData);
         const response = await api.post("/seeker-education", formattedData);
         console.log(response.data);
 
