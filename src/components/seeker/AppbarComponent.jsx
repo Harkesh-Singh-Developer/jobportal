@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import logo from "../../assets/logo/apnacarrer_logo.png";
-
+import SeekerMenu from "./SeekerMenu";
 const AppBarComponent = ({ logout, uid }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -52,7 +52,7 @@ const AppBarComponent = ({ logout, uid }) => {
             open={open}
             onClose={handleClose}
           >
-            {/* <MenuItem onClick={handleClose}>UID : {uid}</MenuItem> */}
+            <MenuItem onClick={handleClose}>UID : {uid}</MenuItem>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My Jobs</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>

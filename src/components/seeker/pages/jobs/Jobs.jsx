@@ -10,6 +10,7 @@ import {
   Button,
   InputAdornment,
   Typography,
+  Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -109,7 +110,7 @@ function Jobs() {
                 Filters
               </Paper>
             </Grid>
-            <Grid size={{ xs: 4, sm: 4, md: 4 }}>
+            <Grid size={{ xs: 5, sm: 5, md: 5 }}>
               <Paper
                 elevation={2}
                 variant="elevation"
@@ -123,18 +124,46 @@ function Jobs() {
                 Jobs List
               </Paper>
             </Grid>
-            <Grid size={{ xs: 3, sm: 3, md: 3 }}>
+            <Grid size={{ xs: 2, sm: 2, md: 2 }}>
               <Paper
-                elevation={2}
-                variant="elevation"
+                elevation={0}
+                variant="outlined"
                 sx={{
                   p: 1,
                   display: "flex",
+                  borderRadius: "10px",
                   justifyContent: "center",
-                  height: "100px",
+                  alignItems: "center",
                 }}
               >
-                Profile
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <Grid>
+                    <Avatar
+                      sx={{ backgroundColor: "#559199", width: 56, height: 56 }}
+                    >
+                      HS
+                    </Avatar>
+                  </Grid>
+                  <Grid>
+                    <Typography variant="body1">Harkesh Singh</Typography>
+                  </Grid>
+                  <Grid>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      fullWidth
+                    >
+                      Update Profile
+                    </Button>
+                  </Grid>
+                </Grid>
               </Paper>
             </Grid>
           </Grid>
