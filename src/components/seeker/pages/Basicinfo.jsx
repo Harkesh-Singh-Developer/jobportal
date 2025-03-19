@@ -122,7 +122,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 1 && (
+          {step === 10 && (
             <Step9
               formData={formData}
               setFormData={setFormData}
