@@ -39,13 +39,27 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  // New function to update user state
+  const updateUser = (newData) => {
+    setUser((prev) => {
+      const updatedUser = { ...prev, ...newData };
+      if (newData?.isProfileCompleted !== undefined) {
+        localStorage.setItem(
+          "profile",
+          JSON.stringify({ completed: newData.isProfileCompleted })
+        );
+      }
+      return updatedUser;
+    });
+  };
+
   const logout = () => {
     localStorage.clear();
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

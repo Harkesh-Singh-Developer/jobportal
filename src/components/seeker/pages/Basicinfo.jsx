@@ -59,7 +59,7 @@ function Basic_Info() {
           </Box>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-          {step === 1 && (
+          {step === 11 && (
             <Step1
               formData={formData}
               setFormData={setFormData}
@@ -122,7 +122,7 @@ function Basic_Info() {
               onNext={handleNext}
             />
           )}
-          {step === 9 && (
+          {step === 1 && (
             <Step9
               formData={formData}
               setFormData={setFormData}

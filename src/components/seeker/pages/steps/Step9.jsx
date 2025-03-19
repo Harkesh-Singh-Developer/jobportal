@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/Auth";
 import Grid from "@mui/material/Grid2";
 import { Paper, Typography, Button } from "@mui/material";
@@ -6,6 +7,7 @@ import api from "../../../config/Config";
 import { ToastContainer, toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -19,7 +21,8 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function Step9({ formData, setFormData, onBack, onNext }) {
-  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, updateUser } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: {
       uid: user?.uid || "",
@@ -31,6 +34,10 @@ function Step9({ formData, setFormData, onBack, onNext }) {
         console.log(response.data);
         if (response.data?.status) {
           toast.success(response.data.message);
+          updateUser({ isProfileCompleted: true });
+          setTimeout(() => {
+            navigate("/profile", { replace: true });
+          }, 2000);
         } else {
           toast.error(response.data.message);
         }
