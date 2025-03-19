@@ -79,14 +79,15 @@ function Step8({ formData, setFormData, onBack, onNext }) {
     setUploading(true);
     setUploadProgress(0);
 
-    const formData = new FormData();
-    formData.append("resume", selectedFile);
-    formData.append("uid", user?.uid); // Pass the user ID
+    const uploadData = new FormData();
+    uploadData.append("resume", selectedFile);
+    uploadData.append("uid", user?.uid); // Pass the user ID
 
     try {
-      const response = await api.post("/seeker-resume", formData, {
+      const response = await api.post("/seeker-resume", uploadData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user?.token}`, // ✅ Include the token
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
@@ -96,15 +97,18 @@ function Step8({ formData, setFormData, onBack, onNext }) {
         },
       });
 
-      console.log(response.data);
       if (response.data?.status) {
         setUploading(false);
         setUploadProgress(100);
-        setFormData({ ...formData, resumeUrl: response.data.file_path });
+        setFormData((prevData) => ({
+          ...prevData,
+          resumeUrl: response.data.file_path, // Store the file path in formData
+        }));
       }
     } catch (error) {
       setUploading(false);
       setError("Failed to upload resume. Please try again.");
+      console.error("Upload error:", error.response?.data);
     }
   };
 
