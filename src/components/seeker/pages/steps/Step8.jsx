@@ -87,7 +87,6 @@ function Step8({ formData, setFormData, onBack, onNext }) {
       const response = await api.post("/seeker-resume", uploadData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user?.token}`, // ✅ Include the token
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
