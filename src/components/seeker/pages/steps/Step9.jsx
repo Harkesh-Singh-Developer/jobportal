@@ -5,7 +5,7 @@ import { Paper, Typography, Button } from "@mui/material";
 import api from "../../../config/Config";
 import { ToastContainer, toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
-
+import { useFormik } from "formik";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -20,45 +20,55 @@ const VisuallyHiddenInput = styled("input")({
 
 function Step9({ formData, setFormData, onBack, onNext }) {
   const { user } = useContext(AuthContext);
-  const handleSubmit = async () => {
-    try {
-      const formData = {
-        uid: user?.uid || "",
-        isProfileCompleted: 1,
-      };
-      const response = await api.post("seeker-profile-complete", formData);
-      console.log(response.data);
-    } catch (error) {
-      toast.error("An error occurred. Please try again later.");
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      uid: user?.uid || "",
+      isProfileCompleted: 1,
+    },
+    onSubmit: async (values) => {
+      try {
+        const response = await api.post("seeker-profile-complete", values);
+        console.log(response.data);
+        if (response.data?.status) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        toast.error("An error occurred. Please try again later.");
+      }
+    },
+  });
 
   return (
-    <Paper variant="outlined" sx={{ p: 4 }}>
-      <ToastContainer />
-      <Grid container spacing={2} justifyContent={"center"}>
-        <Grid size={{ xs: 12 }}>
-          <Typography variant="subtitle2" mb={1}>
-            Congratulations
-          </Typography>
-          <Typography variant="caption" color="initial">
-            Your profile has been successfully created.
-          </Typography>
-        </Grid>
+    <form onSubmit={formik.handleSubmit}>
+      <Paper variant="outlined" sx={{ p: 4 }}>
+        <ToastContainer />
+        <Grid container spacing={2} justifyContent={"center"}>
+          <Grid size={{ xs: 12 }}>
+            <Typography variant="subtitle2" mb={1}>
+              Congratulations
+            </Typography>
+            <Typography variant="caption" color="initial">
+              Your profile has been successfully created.
+            </Typography>
+          </Grid>
 
-        {/* Next Button */}
-        <Grid size={{ xs: 12 }}>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleSubmit}
-          >
-            Proceed
-          </Button>
+          {/* Next Button */}
+          <Grid size={{ xs: 12 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              type="submit"
+              disabled={formik.isSubmitting}
+            >
+              Proceed
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </form>
   );
 }
 
