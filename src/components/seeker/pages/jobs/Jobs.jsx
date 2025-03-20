@@ -10,15 +10,15 @@ import {
   Button,
   InputAdornment,
   Typography,
-  Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
+import ProfileCard from "./cardcomponents/profileCard";
 function Jobs() {
   const { user, logout } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <AppBarComponent logout={logout} uid={user?.uid || "Not Logged In"} />
+      <AppBarComponent logout={logout} uid={user?.uid} />
 
       <Grid container spacing={1} mt={2}>
         <Grid size={{ xs: 12 }}>
@@ -125,46 +125,10 @@ function Jobs() {
               </Paper>
             </Grid>
             <Grid size={{ xs: 4, sm: 2, md: 2 }}>
-              <Paper
-                elevation={0}
-                variant="outlined"
-                sx={{
-                  p: 1,
-                  display: "flex",
-                  borderRadius: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Grid
-                  container
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={1}
-                >
-                  <Grid>
-                    <Avatar
-                      sx={{ backgroundColor: "#559199", width: 56, height: 56 }}
-                    >
-                      HS
-                    </Avatar>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body1">Harkesh Singh</Typography>
-                  </Grid>
-                  <Grid>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      fullWidth
-                    >
-                      Update Profile
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Paper>
+              {/* Right Side View */}
+              {/* Profile Card */}
+              <ProfileCard uid={user?.uid} />
+              {/* Profile Card */}
             </Grid>
           </Grid>
         </Grid>
