@@ -14,6 +14,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
 import ProfileCard from "./cardcomponents/profileCard";
+import Jobcard from "./cardcomponents/Jobcard";
 function Jobs() {
   const { user, logout } = useContext(AuthContext);
   return (
@@ -85,11 +86,7 @@ function Jobs() {
           </Grid>
         </Grid>
         <Divider />
-        <Grid
-          size={{ xs: 12 }}
-          minHeight={"100vh"}
-          sx={{ backgroundColor: "#f2f2f2" }}
-        >
+        <Grid size={{ xs: 12 }} sx={{ backgroundColor: "#f5f5f5" }}>
           <Grid container justifyContent={"center"} spacing={1} mt={1}>
             <Grid size={{ xs: 10 }}>
               <Typography variant="h6">
@@ -111,18 +108,20 @@ function Jobs() {
               </Paper>
             </Grid>
             <Grid size={{ xs: 8, sm: 5, md: 5 }}>
-              <Paper
-                elevation={2}
-                variant="elevation"
-                sx={{
-                  p: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  height: "100px",
-                }}
-              >
-                Jobs List
-              </Paper>
+              <Grid container spacing={1}>
+                <Grid>
+                  <Jobcard />
+                </Grid>
+                <Grid>
+                  <Jobcard />
+                </Grid>
+                <Grid>
+                  <Jobcard />
+                </Grid>
+                <Grid>
+                  <Jobcard />
+                </Grid>
+              </Grid>
             </Grid>
             <Grid size={{ xs: 4, sm: 2, md: 2 }}>
               {/* Right Side View */}
