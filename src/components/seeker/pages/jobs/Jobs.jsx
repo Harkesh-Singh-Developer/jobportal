@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
-import ProfileCard from "./cardcomponents/ProfileCard";
+import Profilecard from "./cardcomponents/profileCard";
 import Jobcard from "./cardcomponents/Jobcard";
 function Jobs() {
   const { user, logout } = useContext(AuthContext);
@@ -126,7 +126,7 @@ function Jobs() {
             <Grid size={{ xs: 4, sm: 2, md: 2 }}>
               {/* Right Side View */}
               {/* Profile Card */}
-              <ProfileCard uid={user?.uid} />
+              <Profilecard uid={user?.uid} />
               {/* Profile Card */}
             </Grid>
           </Grid>

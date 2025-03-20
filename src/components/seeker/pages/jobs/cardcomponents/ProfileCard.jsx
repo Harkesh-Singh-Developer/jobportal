@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Button, Paper, Skeleton, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import api from "../../../../config/Config";
-function ProfileCard({ uid }) {
+function Profilecard({ uid }) {
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState([]);
   useEffect(() => {
@@ -81,4 +81,4 @@ function ProfileCard({ uid }) {
   );
 }
 
-export default ProfileCard;
+export default Profilecard;
