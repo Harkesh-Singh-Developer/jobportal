@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/Auth";
-import AppBarComponent from "../AppbarComponent";
+import AppBarComponent from "../../website/AppbarComponent";
 import banner1 from "../../../assets/images/banner1.png";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";

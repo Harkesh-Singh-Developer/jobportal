@@ -81,7 +81,7 @@ function Login() {
           login(mobile, isProfileCompleted, uid);
           setTimeout(() => {
             console.log("Profile Completed:", isProfileCompleted);
-            // navigate(isProfileCompleted ? "/profile" : "/Basic_info");
+            navigate(isProfileCompleted ? "/jobs" : "/Basic_info");
           }, 2500); // Increased delay (adjust if needed)
         } else {
           setSnackbarMessage("Invalid OTP");

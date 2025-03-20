@@ -13,7 +13,7 @@ function Profilecard({ uid }) {
           uid,
         };
         const response = await api.post("/seeker-basic-data", data);
-        console.log(response.data);
+
         if (response.data?.status) {
           setLoading(false);
           setProfileData(response.data.data);

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import AuthContext from "../../../context/Auth";
-import AppBarComponent from "../../AppbarComponent";
 import Grid from "@mui/material/Grid2";
 import {
   Box,
@@ -20,8 +19,6 @@ function Jobs() {
   const { user, logout } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <AppBarComponent logout={logout} uid={user?.uid} />
-
       <Grid container spacing={1} mt={2}>
         <Grid size={{ xs: 12 }}>
           <Grid container justifyContent={"center"}>
@@ -89,12 +86,17 @@ function Jobs() {
         <Divider />
         <Grid size={{ xs: 12 }} sx={{ backgroundColor: "#f5f5f5" }}>
           <Grid container justifyContent={"center"} spacing={1} mt={1}>
-            <Grid size={{ xs: 10 }}>
-              <Typography variant="h6">
-                Showing 379 jobs based on your profile
-              </Typography>
+            <Grid size={{ xs: 12 }}>
+              <Grid container justifyContent={"center"}>
+                <Grid size={{ xs: 10 }}>
+                  <Typography variant="h6">
+                    Showing 379 jobs based on your profile
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 4, sm: 3, md: 3 }}>
+
+            <Grid size={{ xs: 4, sm: 2, md: 2 }}>
               <Paper
                 elevation={2}
                 variant="elevation"
@@ -108,7 +110,7 @@ function Jobs() {
                 Filters
               </Paper>
             </Grid>
-            <Grid size={{ xs: 8, sm: 5, md: 5 }}>
+            <Grid size={{ xs: 8, sm: 6, md: 6 }}>
               <Grid container spacing={1}>
                 <Grid>
                   <Jobcard />

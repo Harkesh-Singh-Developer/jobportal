@@ -103,67 +103,64 @@ function JobCard() {
                 </Typography>
               </Stack>
             </Grid>
+            <Grid size={{ xs: 12 }}>
+              <Grid
+                container
+                justifyContent={"space-between"}
+                alignItems="center"
+              >
+                <Grid>
+                  <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+                    <Chip
+                      label="Work From Home"
+                      icon={<HomeWorkIcon fontSize="inherit" />} // Makes icon smaller
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontSize: "0.7rem", // Reduce text size
+                        height: "20px", // Adjust chip height
+                        padding: "0 4px", // Reduce padding
+                        "& .MuiChip-icon": {
+                          fontSize: "0.9rem", // Make icon slightly smaller
+                        },
+                      }}
+                    />
+
+                    <Chip
+                      label="Full time"
+                      icon={<BusinessIcon fontSize="small" />}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontSize: "0.7rem", // Reduce text size
+                        height: "20px", // Adjust chip height
+                        padding: "0 4px", // Reduce padding
+                        "& .MuiChip-icon": {
+                          fontSize: "0.9rem", // Make icon slightly smaller
+                        },
+                      }}
+                    />
+                    <Chip
+                      label="Posted: 3 Days ago"
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontSize: "0.7rem", // Reduce text size
+                        height: "20px", // Adjust chip height
+                        padding: "0 4px", // Reduce padding
+                        "& .MuiChip-icon": {
+                          fontSize: "0.9rem", // Make icon slightly smaller
+                        },
+                      }}
+                    />
+                  </Stack>
+                </Grid>
+              </Grid>
+              {/* Job Requirements */}
+            </Grid>
           </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Grid size={{ xs: 12 }}>
-          <Grid container justifyContent={"space-between"} alignItems="center">
-            <Grid>
-              <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-                <Chip
-                  label="Work From Home"
-                  icon={<HomeWorkIcon fontSize="inherit" />} // Makes icon smaller
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    fontSize: "0.7rem", // Reduce text size
-                    height: "20px", // Adjust chip height
-                    padding: "0 4px", // Reduce padding
-                    "& .MuiChip-icon": {
-                      fontSize: "0.9rem", // Make icon slightly smaller
-                    },
-                  }}
-                />
-
-                <Chip
-                  label="Full time"
-                  icon={<BusinessIcon fontSize="small" />}
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    fontSize: "0.7rem", // Reduce text size
-                    height: "20px", // Adjust chip height
-                    padding: "0 4px", // Reduce padding
-                    "& .MuiChip-icon": {
-                      fontSize: "0.9rem", // Make icon slightly smaller
-                    },
-                  }}
-                />
-                <Chip
-                  label="Posted: 3 Days ago"
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    fontSize: "0.7rem", // Reduce text size
-                    height: "20px", // Adjust chip height
-                    padding: "0 4px", // Reduce padding
-                    "& .MuiChip-icon": {
-                      fontSize: "0.9rem", // Make icon slightly smaller
-                    },
-                  }}
-                />
-              </Stack>
-            </Grid>
-            <Grid>
-              <Button variant="outlined" color="secondary">
-                Apply Now
-              </Button>
-            </Grid>
-          </Grid>
-          {/* Job Requirements */}
-        </Grid>
-      </CardActions>
     </Card>
   );
 }
