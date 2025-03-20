@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
-import ProfileCard from "./cardcomponents/profileCard";
+import ProfileCard from "./cardcomponents/ProfileCard";
 import Jobcard from "./cardcomponents/Jobcard";
 function Jobs() {
   const { user, logout } = useContext(AuthContext);
