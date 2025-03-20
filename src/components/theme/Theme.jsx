@@ -11,10 +11,14 @@ const theme = createTheme({
   typography: {
     fontFamily: `"Poppins", "Arial", sans-serif`,
     body2: { fontSize: "0.8rem" },
+    h5: {
+      fontSize: "1.1rem",
+      letterSpacing: "0.5px",
+    },
     h6: {
       fontSize: "1rem",
       fontWeight: "bold",
-      letterSpacing: "0.5px",
+      letterSpacing: "0.3px",
     },
   },
 });

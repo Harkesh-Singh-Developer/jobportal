@@ -9,6 +9,8 @@ import {
   Stack,
   Divider,
   CardActionArea,
+  Button,
+  CardActions,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import BusinessIcon from "@mui/icons-material/Business"; // Icon for company
@@ -101,11 +103,14 @@ function JobCard() {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid size={{ xs: 12 }}>
-              <Divider sx={{ mb: 1 }} />
-              {/* Job Requirements */}
-
-              <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap" }}>
+          </Grid>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Grid size={{ xs: 12 }}>
+          <Grid container justifyContent={"space-between"} alignItems="center">
+            <Grid>
+              <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
                 <Chip
                   label="Work From Home"
                   icon={<HomeWorkIcon fontSize="inherit" />} // Makes icon smaller
@@ -150,9 +155,15 @@ function JobCard() {
                 />
               </Stack>
             </Grid>
+            <Grid>
+              <Button variant="outlined" color="secondary">
+                Apply Now
+              </Button>
+            </Grid>
           </Grid>
-        </CardContent>
-      </CardActionArea>
+          {/* Job Requirements */}
+        </Grid>
+      </CardActions>
     </Card>
   );
 }

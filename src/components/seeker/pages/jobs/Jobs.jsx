@@ -15,6 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
 import Profilecard from "./cardcomponents/profileCard";
 import Jobcard from "./cardcomponents/Jobcard";
+import Aiinterview from "./cardcomponents/Aiinterview";
 function Jobs() {
   const { user, logout } = useContext(AuthContext);
   return (
@@ -125,9 +126,23 @@ function Jobs() {
             </Grid>
             <Grid size={{ xs: 4, sm: 2, md: 2 }}>
               {/* Right Side View */}
-              {/* Profile Card */}
-              <Profilecard uid={user?.uid} />
-              {/* Profile Card */}
+              <Grid
+                container
+                justifyContent={"center"}
+                sx={{ border: "1px solid #dedede", borderRadius: "10px" }}
+                spacing={1}
+              >
+                <Grid size={{ xs: 11 }}>
+                  {/* Profile Card */}
+                  <Profilecard uid={user?.uid} />
+                  {/* Profile Card */}
+                </Grid>
+                <Grid size={{ xs: 11 }}>
+                  {/* Ai Card */}
+                  <Aiinterview />
+                  {/* Ai Card */}
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
