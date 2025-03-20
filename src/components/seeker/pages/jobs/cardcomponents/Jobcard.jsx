@@ -97,7 +97,7 @@ function JobCard() {
                 </Typography>
                 <Divider orientation="vertical" variant="middle" flexItem />
                 <Typography variant="caption" sx={{ color: "#888888" }}>
-                  Typescript
+                  Typescript TS
                 </Typography>
               </Stack>
             </Grid>
