@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PlaceIcon from "@mui/icons-material/Place";
-import Profilecard from "./cardcomponents/profileCard";
+import Profilecard from "./cardcomponents/Profilecard";
 import Jobcard from "./cardcomponents/Jobcard";
 import Aiinterview from "./cardcomponents/Aiinterview";
 function Jobs() {
