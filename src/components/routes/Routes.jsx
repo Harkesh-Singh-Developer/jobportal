@@ -24,7 +24,7 @@ const AppRoutes = () => {
         {/* Public Website Route */}
         <Route path="/website" element={<Website />} />
         <Route path="/login" element={<Login />} />
-        {/* Authenticated Layout for Logged-In Users */}
+        {/* Authenticated Layout for Logged-In Users here*/}
         <Route path="/" element={<MainLayout />}>
           <Route
             path="profile"
