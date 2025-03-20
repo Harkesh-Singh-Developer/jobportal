@@ -7,5 +7,6 @@ export default defineConfig({
   server: {
     host: true, // Or use '0.0.0.0'
     port: 5173, // Change if needed
+    historyApiFallback: true,
   },
 });
