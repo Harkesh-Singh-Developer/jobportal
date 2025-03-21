@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/apnaportal/", // Set this to match your deployment subdirectory
   server: {
-    host: true,
-    port: 5173,
+    host: true, // Or use '0.0.0.0'
+    port: 5173, // Change if needed
     historyApiFallback: true,
   },
 });
