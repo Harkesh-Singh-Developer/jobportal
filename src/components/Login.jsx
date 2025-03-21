@@ -55,7 +55,9 @@ function Login() {
         setSnackbarOpen(true);
       }
     } catch (error) {
-      setSnackbarMessage(error);
+      setSnackbarMessage(
+        error.response?.data?.message || error.message || "An error occurred"
+      );
       setSnackbarOpen(true);
     }
   };
