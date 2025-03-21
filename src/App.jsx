@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./components/theme/Theme";
 import { BrowserRouter } from "react-router-dom";

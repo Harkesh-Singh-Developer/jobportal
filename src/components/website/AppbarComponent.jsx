@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/logo/apnacarrer_logo.png";
-import { Avatar, Button, Card } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 function AppBarComponent({ logout, uid }) {
   const navigate = useNavigate();
