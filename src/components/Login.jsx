@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import "./theme/Customcss.css";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
 import { Close } from "@mui/icons-material";
 
 function Login() {
@@ -103,22 +103,7 @@ function Login() {
 
   return (
     <React.Fragment>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        open={snackbarOpen}
-        message={snackbarMessage}
-        autoHideDuration={2000}
-        onClose={handleCloseSnackbar}
-        action={
-          <IconButton
-            size="small"
-            color="inherit"
-            onClick={handleCloseSnackbar}
-          >
-            <Close fontSize="small" />
-          </IconButton>
-        }
-      />
+      <ToastContainer />
       {step === 1 ? (
         <Grid
           container

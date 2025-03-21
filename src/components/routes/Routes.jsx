@@ -4,6 +4,7 @@ import Fallbackloader from "./Fallbackloader";
 import AuthContext from "../context/Auth";
 import MainLayout from "../layout/Mainlayout";
 
+const Test = React.lazy(() => import("../Test"));
 const Login = React.lazy(() => import("../Login"));
 const Website = React.lazy(() => import("../website/Website")); // New Website Component
 const Jobs = React.lazy(() => import("../seeker/pages/jobs/Jobs"));
@@ -19,10 +20,10 @@ const AppRoutes = () => {
     <Suspense fallback={<Fallbackloader />}>
       <Routes>
         {/* Redirect '/' to /website */}
-        <Route path="/" element={<Navigate to="/website" />} />
-
+        <Route path="/" element={<Website />} />
+        <Route path="test" element={<Test />} />
         {/* Public Website Route */}
-        <Route path="/website" element={<Website />} />
+
         <Route path="/login" element={<Login />} />
         {/* Authenticated Layout for Logged-In Users here*/}
         <Route path="/" element={<MainLayout />}>
@@ -40,10 +41,8 @@ const AppRoutes = () => {
               )
             }
           />
-          <Route
-            path="jobs"
-            element={isAuthenticated ? <Jobs /> : <Navigate to="/" />}
-          />
+
+          <Route path="jobs" element={<Jobs />} />
           <Route path="update" element={<div>Update Page</div>} />
           <Route path="create" element={<div>Create Page</div>} />
         </Route>

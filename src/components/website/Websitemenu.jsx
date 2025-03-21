@@ -1,37 +1,28 @@
 import React from "react";
-import logo from "../../assets/logo/apnacarrer_logo.png";
-import { Avatar, Button, Card } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-function AppBarComponent({ logout, uid }) {
-  const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    navigate("/login"); // Navigate to login page
-  };
-
-  const handleLogoutClick = () => {
-    logout();
-    navigate("/");
-  };
+function Websitemenu() {
   return (
-    <div style={{ backgroundColor: "white" }}>
+    <>
       <nav className="navbar navbar-expand-lg center-nav transparent navbar-light">
         <div className="container flex-lg-row flex-nowrap align-items-center">
           <div className="navbar-brand w-100">
-            <Link to="/">
-              <img src={logo} srcSet={logo} alt="apnacareer logo" height={40} />
-            </Link>
+            <a href="./index.html">
+              <img
+                src="./assets/img/logo-dark.png"
+                srcSet="./assets/img/logo-dark@2x.png 2x"
+                alt=""
+              />
+            </a>
           </div>
           <div className="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
             <div className="offcanvas-header d-lg-none">
-              <Link to="/">
+              <a href="./index.html">
                 <img
-                  src={logo}
-                  srcSet={logo}
-                  alt="apnacareer logo"
-                  height={30}
+                  src="./assets/img/logo-light.png"
+                  srcSet="./assets/img/logo-light@2x.png 2x"
+                  alt=""
                 />
-              </Link>
+              </a>
               <button
                 type="button"
                 className="btn-close btn-close-white"
@@ -47,13 +38,13 @@ function AppBarComponent({ logout, uid }) {
                     href="#"
                     data-bs-toggle="dropdown"
                   >
-                    Jobs
+                    Dropdown
                   </a>
                   <ul className="dropdown-menu">
                     <li className="nav-item">
-                      <Link className="dropdown-item" to="/jobs">
-                        Part Time Jobs
-                      </Link>
+                      <a className="dropdown-item" href="#">
+                        Action
+                      </a>
                     </li>
                     <li className="dropdown dropdown-submenu dropend">
                       <a
@@ -104,7 +95,113 @@ function AppBarComponent({ logout, uid }) {
                     </li>
                   </ul>
                 </li>
-
+                <li className="nav-item dropdown dropdown-mega">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    data-bs-toggle="dropdown"
+                  >
+                    Mega Menu
+                  </a>
+                  <ul className="dropdown-menu mega-menu">
+                    <li className="mega-menu-content">
+                      <div className="row gx-0 gx-lg-3">
+                        <div className="col-lg-6">
+                          <h6 className="dropdown-header">One</h6>
+                          <div className="row gx-0">
+                            <div className="col-lg-6">
+                              <ul className="list-unstyled">
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                            {/*/column */}
+                            <div className="col-lg-6">
+                              <ul className="list-unstyled">
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item" href="#">
+                                    Link
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                            {/*/column */}
+                          </div>
+                          {/*/.row */}
+                        </div>
+                        {/*/column */}
+                        <div className="col-lg-3">
+                          <h6 className="dropdown-header">Two</h6>
+                          <ul className="list-unstyled">
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        {/*/column */}
+                        <div className="col-lg-3">
+                          <h6 className="dropdown-header">Three</h6>
+                          <ul className="list-unstyled">
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="#">
+                                Link
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        {/*/column */}
+                      </div>
+                      {/*/.row */}
+                    </li>
+                    {/*/.mega-menu-content*/}
+                  </ul>
+                  {/*/.dropdown-menu */}
+                </li>
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -138,7 +235,23 @@ function AppBarComponent({ logout, uid }) {
                       {/* /.column */}
                       <div>
                         <h6 className="dropdown-header">Two</h6>
-                        <Avatar variant="rounded">Img</Avatar>
+                        <ul className="list-unstyled">
+                          <li>
+                            <a className="dropdown-item" href="#">
+                              Link
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="#">
+                              Link
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="#">
+                              Another Link
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                       {/* /.column */}
                     </div>
@@ -214,17 +327,6 @@ function AppBarComponent({ logout, uid }) {
                 >
                   Contact
                 </a>
-                {uid ? (
-                  <>
-                    <Button color="inherit" onClick={handleLogoutClick}>
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <Button color="inherit" onClick={handleLoginClick}>
-                    Login
-                  </Button>
-                )}
               </li>
               <li className="nav-item d-lg-none">
                 <button className="hamburger offcanvas-nav-btn">
@@ -239,8 +341,8 @@ function AppBarComponent({ logout, uid }) {
         {/* /.container */}
       </nav>
       {/* /.navbar */}
-    </div>
+    </>
   );
 }
 
-export default AppBarComponent;
+export default Websitemenu;
