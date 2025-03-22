@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { encryptUrlParams, decryptUrlParams } from "../../../config/Config";
 import AuthContext from "../../../context/Auth";
 import Grid from "@mui/material/Grid2";
 import {
@@ -16,7 +17,7 @@ import Profilecard from "./cardcomponents/Profilecard";
 import Jobcard from "./cardcomponents/Jobcard";
 import Aiinterview from "./cardcomponents/Aiinterview";
 function Jobs() {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <React.Fragment>
       <Grid container spacing={1} mt={2}>
@@ -96,7 +97,10 @@ function Jobs() {
               </Grid>
             </Grid>
 
-            <Grid size={{ xs: 4, sm: 2, md: 2 }}>
+            <Grid
+              size={{ xs: 12, sm: 2, md: 2 }}
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
               <Paper
                 elevation={2}
                 variant="elevation"
@@ -110,23 +114,26 @@ function Jobs() {
                 Filters
               </Paper>
             </Grid>
-            <Grid size={{ xs: 8, sm: 6, md: 6 }}>
+            <Grid size={{ xs: 11, sm: 6, md: 6 }}>
               <Grid container spacing={1}>
                 <Grid>
-                  <Jobcard />
+                  <Jobcard jobId={encryptUrlParams("1234")} />
                 </Grid>
                 <Grid>
-                  <Jobcard />
+                  <Jobcard jobId={encryptUrlParams("456")} />
                 </Grid>
                 <Grid>
-                  <Jobcard />
+                  <Jobcard jobId={encryptUrlParams("7891")} />
                 </Grid>
                 <Grid>
-                  <Jobcard />
+                  <Jobcard jobId={encryptUrlParams("1112")} />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid size={{ xs: 4, sm: 2, md: 2 }}>
+            <Grid
+              size={{ xs: 12, sm: 2, md: 2 }}
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
               {/* Right Side View */}
               <Grid
                 container

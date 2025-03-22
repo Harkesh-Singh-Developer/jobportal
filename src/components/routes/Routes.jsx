@@ -8,6 +8,7 @@ const Test = React.lazy(() => import("../Test"));
 const Login = React.lazy(() => import("../Login"));
 const Website = React.lazy(() => import("../website/Website")); // New Website Component
 const Jobs = React.lazy(() => import("../seeker/pages/jobs/Jobs"));
+const JobDetails = React.lazy(() => import("../seeker/pages/jobs/Jobdetails"));
 const Profile = React.lazy(() => import("../seeker/pages/Profile"));
 const Basic_Info = React.lazy(() => import("../seeker/pages/Basicinfo"));
 
@@ -41,7 +42,7 @@ const AppRoutes = () => {
               )
             }
           />
-
+          <Route path="jobdetails/:jobId" element={<JobDetails />} />
           <Route path="jobs" element={<Jobs />} />
           <Route path="update" element={<div>Update Page</div>} />
           <Route path="create" element={<div>Create Page</div>} />
@@ -54,7 +55,7 @@ const AppRoutes = () => {
         />
 
         {/* Catch-all route: Redirect unknown paths to website */}
-        <Route path="*" element={<Navigate to="/website" />} />
+        <Route path="*" element={<Navigate to="/jobs" />} />
       </Routes>
     </Suspense>
   );

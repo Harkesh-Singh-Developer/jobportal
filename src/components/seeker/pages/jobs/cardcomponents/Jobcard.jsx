@@ -1,7 +1,7 @@
 import React from "react";
+import { encryptUrlParams, decryptUrlParams } from "../../../../config/Config";
 import {
   Card,
-  CardHeader,
   CardContent,
   Avatar,
   Typography,
@@ -9,8 +9,6 @@ import {
   Stack,
   Divider,
   CardActionArea,
-  Button,
-  CardActions,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import BusinessIcon from "@mui/icons-material/Business"; // Icon for company
@@ -18,14 +16,21 @@ import LocationOnIcon from "@mui/icons-material/LocationOn"; // Location Icon
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee"; // Salary Icon
 import WorkIcon from "@mui/icons-material/Work"; // Experience Icon
 import HomeWorkIcon from "@mui/icons-material/HomeWork"; // Work from Home Icon
+import { useNavigate } from "react-router-dom";
 
-function JobCard() {
+function JobCard({ jobId }) {
+  const decryptedJobId = decryptUrlParams(jobId); // use this and pass this to endpoint to get job details
+
+  const navigate = useNavigate();
+  const handleJobDetails = () => {
+    navigate(`/jobdetails/${jobId}`);
+  };
   const Jobdescription =
     "As a Webflow Developer, you will be responsible for creating responsive, scalable, and high-performing websites, ensuring they align with our brand and business goals. Youll collaborate with the design team";
 
   return (
     <Card variant="outlined" sx={{ borderRadius: "10px" }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleJobDetails}>
         {/* Job Title & Company Header */}
         <CardContent>
           <Grid container spacing={1}>
