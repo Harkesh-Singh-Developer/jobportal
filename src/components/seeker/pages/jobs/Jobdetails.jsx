@@ -18,6 +18,7 @@ import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AiChatbot from "../../../../test";
 function Jobdetails() {
   const { jobId } = useParams();
   const decryptedJobId = decryptUrlParams(jobId);
@@ -120,21 +121,14 @@ function Jobdetails() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid sx={{ display: { xs: "none", sm: "block" } }}>
+        <Grid
+          size={{ xs: 12, sm: 3, md: 3 }}
+          sx={{ display: { xs: "none", sm: "block" } }}
+        >
           <Paper elevation={1}>
-            <Typography variant="h6">
-              Jobs you might be interested in
-            </Typography>
             <Grid container>
               <Grid>
-                <Card>
-                  <CardHeader
-                    avatar={<Avatar aria-label="">VT</Avatar>}
-                    action={<IconButton aria-label=""></IconButton>}
-                    title="Job Title"
-                    subheader="Company Name"
-                  />
-                </Card>
+                <AiChatbot />
               </Grid>
             </Grid>
           </Paper>
