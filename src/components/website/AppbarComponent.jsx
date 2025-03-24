@@ -216,6 +216,12 @@ function AppBarComponent({ logout, uid }) {
                 </a>
                 {uid ? (
                   <>
+                    <Button
+                      color="inherit"
+                      onClick={() => navigate("/profile")}
+                    >
+                      Profile
+                    </Button>
                     <Button color="inherit" onClick={handleLogoutClick}>
                       Logout
                     </Button>
