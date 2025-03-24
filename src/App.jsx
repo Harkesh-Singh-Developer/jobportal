@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./components/theme/Theme";
 import { BrowserRouter } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import AppRoutes from "./components/routes/Routes";
 import { AuthProvider } from "./components/context/Auth";
 function App() {
@@ -9,11 +10,11 @@ function App() {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
+        <Router>
           <AuthProvider>
             <AppRoutes />
           </AuthProvider>
-        </BrowserRouter>
+        </Router>
       </ThemeProvider>
     </React.Fragment>
   );
