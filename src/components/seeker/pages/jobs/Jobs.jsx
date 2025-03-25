@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { encryptUrlParams, decryptUrlParams } from "../../../config/Config";
 import AuthContext from "../../../context/Auth";
 import Grid from "@mui/material/Grid2";
-import { Divider, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import Profilecard from "./cardcomponents/Profilecard";
 import Jobcard from "./cardcomponents/Jobcard";
 import Aiinterview from "./cardcomponents/Aiinterview";
@@ -11,11 +11,11 @@ function Jobs() {
   const { user } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <Grid container spacing={1} >
+      <Grid container spacing={1}>
         <Grid size={{ xs: 12 }}>
           <JobSearch />
         </Grid>
-        
+
         <Grid size={{ xs: 12 }} sx={{ backgroundColor: "#f5f5f5" }}>
           <Grid container justifyContent={"center"} spacing={1} mt={1}>
             <Grid size={{ xs: 12 }}>

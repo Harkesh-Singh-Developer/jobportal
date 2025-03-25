@@ -44,8 +44,6 @@ const AppRoutes = () => {
           />
           <Route path="jobdetails/:jobId" element={<JobDetails />} />
           <Route path="jobs" element={<Jobs />} />
-          <Route path="update" element={<div>Update Page</div>} />
-          <Route path="create" element={<div>Create Page</div>} />
         </Route>
 
         {/* Basic Info Route (Outside MainLayout) */}

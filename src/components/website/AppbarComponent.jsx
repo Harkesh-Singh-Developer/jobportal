@@ -68,6 +68,11 @@ function AppBarComponent({ logout, uid }) {
                   <ul className="dropdown-menu">
                     <li className="nav-item">
                       <Link className="dropdown-item" to="/jobs">
+                        Recommended Jobs
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="dropdown-item" to="/jobs">
                         Part Time Jobs
                       </Link>
                     </li>
@@ -161,9 +166,63 @@ function AppBarComponent({ logout, uid }) {
                     {/* /auto-column */}
                   </div>
                 </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link "
+                    href="/profile"
+                    data-bs-toggle="dropdown"
+                  >
+                    Application Status
+                  </a>
+                </li>
               </ul>
               {/* /.navbar-nav */}
               <div className="d-lg-none mt-auto pt-6 pb-6 order-4">
+                {/* Temp Fix */}
+                {uid ? (
+                  <div>
+                    <Chip
+                      size="medium"
+                      avatar={<Avatar />}
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    />
+
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          navigate("/profile");
+                        }}
+                      >
+                        <ListItemIcon>
+                          <Avatar sx={{ width: 24, height: 24 }} />
+                        </ListItemIcon>
+                        View Profile
+                      </MenuItem>
+
+                      <MenuItem onClick={handleLogoutClick}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                ) : (
+                  <Button color="inherit" onClick={handleLoginClick}>
+                    Login
+                  </Button>
+                )}
+                {/* Temp Fix */}
                 <a href="mailto:first.last@email.com" className="link-inverse">
                   info@email.com
                 </a>
