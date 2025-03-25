@@ -1,10 +1,26 @@
 import React from "react";
 import logo from "../../assets/logo/apnacarrer_logo.png";
-import { Avatar, Button } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Chip,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import Logout from "@mui/icons-material/Logout";
+
 function AppBarComponent({ logout, uid }) {
   const navigate = useNavigate();
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleLoginClick = () => {
     navigate("/login"); // Navigate to login page
   };
@@ -208,24 +224,44 @@ function AppBarComponent({ logout, uid }) {
                 </ul>
               </li>
               <li className="nav-item d-none d-md-block">
-                <a
-                  href="./contact.html"
-                  className="btn btn-sm btn-primary rounded-pill"
-                >
-                  Contact
-                </a>
                 {uid ? (
-                  <>
-                    <Button
-                      color="inherit"
-                      onClick={() => navigate("/profile")}
+                  <div>
+                    <Chip
+                      size="medium"
+                      avatar={<Avatar />}
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    />
+
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
                     >
-                      Profile
-                    </Button>
-                    <Button color="inherit" onClick={handleLogoutClick}>
-                      Logout
-                    </Button>
-                  </>
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          navigate("/profile");
+                        }}
+                      >
+                        <ListItemIcon>
+                          <Avatar sx={{ width: 24, height: 24 }} />
+                        </ListItemIcon>
+                        View Profile
+                      </MenuItem>
+
+                      <MenuItem onClick={handleLogoutClick}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </div>
                 ) : (
                   <Button color="inherit" onClick={handleLoginClick}>
                     Login
