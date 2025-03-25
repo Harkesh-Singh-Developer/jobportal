@@ -83,7 +83,7 @@ function Profile() {
                   Harkesh Singh Chauhan
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                  Software Engineer @ HN Cyberspace
+                  Software Engineer @ HNC
                 </Typography>
               </Grid>
 
